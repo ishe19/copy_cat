@@ -26,22 +26,25 @@ class _LandingPageState extends State<LandingPage> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Material(
-          color: Colors.white,
-          child: TabBar(
-            controller: tabController,
-            tabs: <Widget>[
+      bottomNavigationBar: SizedBox(
+        height: 52,
+        child: Material(
+            color: Colors.white,
+            child: TabBar(
+              controller: tabController,
+              tabs: <Widget>[
 
-              Tab(
-                icon: Icon(Icons.dashboard),
-                child: Text("Dashboard", style: TextStyle(color: Colors.black,)),
-              ),
-              Tab(
-                icon: Icon(Icons.person),
-                child: Text("Profile", style: TextStyle(color: Colors.black,),),
-              ),
-            ],
-          )
+                Tab(
+                  icon: Icon(Icons.dashboard, color: Colors.black,),
+                  child: Text("Dashboard", style: TextStyle(color: Colors.black,)),
+                ),
+                Tab(
+                  icon: Icon(Icons.person, color: Colors.black,),
+                  child: Text("Profile", style: TextStyle(color: Colors.black,),),
+                ),
+              ],
+            )
+        ),
       ),
       body: TabBarView(
       controller: tabController,

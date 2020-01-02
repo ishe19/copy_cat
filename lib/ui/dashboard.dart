@@ -1,3 +1,5 @@
+import 'package:copy_cat/ui/landing_page.dart';
+import 'package:copy_cat/ui/pages/new_model.dart';
 import 'package:flutter/material.dart';
 import 'swot_home.dart' as swot;
 import 'canvas_home.dart' as canvas;
@@ -26,11 +28,24 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
     super.dispose();
   }
 
+  void checkTab(){
+    if(inAppTabController == 1){
+
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: SideDrawer(),
+//      drawer: SideDrawer(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Colors.green,
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => NewModel()));
+        },
+      ),
       appBar: AppBar(
         title: Text("Copy Cat"),
         bottom: TabBar(

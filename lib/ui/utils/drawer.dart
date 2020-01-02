@@ -26,7 +26,6 @@ class _SideDrawerState extends State<SideDrawer> {
                 UserAccountsDrawerHeader(
                   accountEmail: Text("Email"),
                   accountName: Text("Username"),
-//                  accountName: Text("UserName"),
                   currentAccountPicture: GestureDetector(
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
@@ -63,13 +62,12 @@ class _SideDrawerState extends State<SideDrawer> {
                   leading: Icon(Icons.exit_to_app, color: Uidata.primaryColor,),
                   onTap: () {
                   },
-
                 ),
               ],
             ),
           )
         ],
       ),
-    );;
+    );
   }
 }

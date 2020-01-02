@@ -10,7 +10,7 @@ class CopyCat extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Business Manager Copy",
-      home: Dashboard(),
+      home: LandingPage(),
     );
   }
 }
