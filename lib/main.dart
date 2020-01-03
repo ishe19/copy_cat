@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'ui/landing_page.dart';
 import 'ui/dashboard.dart';
+import 'dart:async';
+import 'package:camera/camera.dart';
 
-void main() => runApp(CopyCat());
+
+List<CameraDescription> cameras;
+
+Future<Null> main() async {
+  cameras = await availableCameras();
+  runApp(CopyCat());
+}
 
 class CopyCat extends StatelessWidget {
   @override
@@ -10,7 +18,7 @@ class CopyCat extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Business Manager Copy",
-      home: LandingPage(),
+      home: LandingPage(cameras),
     );
   }
 }
