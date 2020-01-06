@@ -15,11 +15,21 @@ class _ViewPostState extends State<ViewPost> {
       appBar: AppBar(
         title: Text(widget.postName),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: ,
+        child: Icon(Icons.add),
+      ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-
-          ],
+        child: Container(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.pages),
+                Text("Add post")
+              ],
+            ),
+          ),
         ),
       ),
     );
