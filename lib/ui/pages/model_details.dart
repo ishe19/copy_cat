@@ -1,4 +1,6 @@
+import 'package:copy_cat/ui/pages/view_post.dart';
 import 'package:flutter/material.dart';
+import 'package:copy_cat/ui/utils/uidata.dart';
 
 
 class ModelDetails extends StatefulWidget {
@@ -39,6 +41,13 @@ var items = [
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Uidata.btnColor,
+        onPressed: (){
+
+        },
+        child: Icon(Icons.exit_to_app),
+      ),
       body: SingleChildScrollView(
           child: Table(
 //            defaultColumnWidth: FractionColumnWidth(0.32),
@@ -74,7 +83,7 @@ Widget cardView(String cardName){
   return Card(
     child: InkWell(
       onTap: () {
-
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ViewPost(cardName)));
       },
       child: Container(
         height: 120,
