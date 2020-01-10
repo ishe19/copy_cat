@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';
 
-
 class ViewPost extends StatefulWidget {
-  String postName;
+  final String postName;
   ViewPost(this.postName);
 
   @override

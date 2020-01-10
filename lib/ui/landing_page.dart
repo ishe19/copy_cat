@@ -3,8 +3,8 @@ import 'dashboard.dart' as dash;
 import 'profile.dart' as prof;
 
 class LandingPage extends StatefulWidget {
-  var cameras;
-  LandingPage(this.cameras);
+  // final cameras;
+  // LandingPage(this.cameras);
   @override
   _LandingPageState createState() => _LandingPageState();
 }
@@ -51,7 +51,8 @@ class _LandingPageState extends State<LandingPage> with SingleTickerProviderStat
       body: TabBarView(
       controller: tabController,
       children: <Widget>[
-        dash.Dashboard(widget.cameras),
+        dash.Dashboard(),
+        //  dash.Dashboard(widget.cameras),
         prof.ProfileView(),
       ],
     ),

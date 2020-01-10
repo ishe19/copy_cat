@@ -1,4 +1,4 @@
-import 'package:copy_cat/ui/pages/model_details.dart';
+//import 'package:copy_cat/ui/pages/model_details.dart';
 import 'package:flutter/material.dart';
 import 'utils/uidata.dart';
 
@@ -57,7 +57,7 @@ class _CanvasHomeState extends State<CanvasHome> {
                           color: Colors.white,
                           child: Text("DETAILS", style: TextStyle(color: Uidata.primaryColor),),
                           onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => ModelDetails()));
+                           //Navigator.push(context, MaterialPageRoute(builder: (context) => ModelDetails()));
                           },
                         ),
                       ],

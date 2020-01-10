@@ -95,8 +95,11 @@ Widget cardView(String cardName){
 //                image: ,
 //              ),
             FlatButton(
-              child: Text("$cardName", style: TextStyle(fontSize: 12),),
-            )
+              onPressed: (){
+
+              },
+                child: Text("$cardName", style: TextStyle(fontSize: 12),)),
+            
           ],
         ),
       ),
