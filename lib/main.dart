@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'ui/landing_page.dart';
 //import 'ui/dashboard.dart';
-import 'dart:async';
+//import 'dart:async';
 // import 'package:camera/camera.dart';
 
 
 // List<CameraDescription> cameras;
-
-Future<Null> main() async {
+void main() {
   // cameras = await availableCameras();
   runApp(new CopyCat());
 }
