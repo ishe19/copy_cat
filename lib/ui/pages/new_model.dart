@@ -2,9 +2,7 @@ import 'package:copy_cat/ui/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';
 // import 'package:camera/camera.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
-import 'dart:async';
+
 
 
 final formkey = new GlobalKey<FormState> ();

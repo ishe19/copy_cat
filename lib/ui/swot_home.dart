@@ -1,5 +1,7 @@
-import 'package:copy_cat/ui/pages/edit_componets.dart';
-import 'package:copy_cat/ui/pages/swot_details.dart';
+
+
+import 'package:copy_cat/ui/pages/swot_elements/edit_componets.dart';
+import 'package:copy_cat/ui/pages/swot_elements/swot_details.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';
 import 'package:flutter/material.dart';
 
