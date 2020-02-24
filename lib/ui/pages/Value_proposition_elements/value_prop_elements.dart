@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:copy_cat/ui/utils/uidata.dart';
 import 'package:copy_cat/models/db_manager.dart';
-// import 'package:camera/camera.dart';
+import 'package:copy_cat/ui/utils/uidata.dart';
+import 'package:flutter/material.dart';
 
 enum NoteMode { 
   Editing,
@@ -11,32 +10,26 @@ enum NoteMode {
 
 final formkey = new GlobalKey<FormState> ();
 
-class SwotDetails extends StatefulWidget {
+class CustomerDetails extends StatefulWidget {
 
   final NoteMode noteMode;
   final Map<String, dynamic> note;
 
-  SwotDetails(this.noteMode, this.note);
+  CustomerDetails(this.noteMode, this.note);
 
   // final cameras;
   // Newswot(this.cameras);
 
 
   @override
-  SwotDetailsState createState() => SwotDetailsState();
+  CustomerDetailsState createState() => CustomerDetailsState();
 }
 
-class SwotDetailsState extends State<SwotDetails> {
+class CustomerDetailsState extends State<CustomerDetails> {
 
-  String swotTitle;
-  String swotDescription;
+  String customerTitle;
+  TextEditingController _customerTitleController = new TextEditingController();
 
-
-
-
-
-  TextEditingController _swotTitleController = new TextEditingController();
-  TextEditingController _swotDescriptionController = new TextEditingController();
 
 
   Color labelColor = Colors.grey;
@@ -44,17 +37,11 @@ class SwotDetailsState extends State<SwotDetails> {
   @override
   void initState(){
     super.initState();
-    _swotDescriptionController.addListener(
+    
+    _customerTitleController.addListener(
       (){
         setState(() {
-          swotDescription = _swotDescriptionController.text;
-        });
-      }
-    );
-    _swotTitleController.addListener(
-      (){
-        setState(() {
-          swotTitle = _swotTitleController.text;
+          customerTitle = _customerTitleController.text;
         });
       }
     );
@@ -84,25 +71,25 @@ class SwotDetailsState extends State<SwotDetails> {
             Navigator.pop(context);
           },
         ),
-        title: Text("New SWOT "),
+        title: Text("New Customer "),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.done),
             onPressed: () {
               if(validateForm()) {
                       if (widget.noteMode == NoteMode.Adding) {
-                        DBManagerSwot.insertSwot({
-                          'SwotTitle': swotTitle,
-                          'SwotDescription': swotDescription,
+                        DBManagerCustomer.insertCustomer({
+                          'customerTitle': customerTitle,
+                        
                         });
                       } else if (widget?.noteMode == NoteMode.Editing) {
-                        DBManagerSwot.updateModel({
+                        DBManagerCustomer.updateCustomer({
                           'id': widget.note['id'],
-                          'SwotTitle': _swotTitleController.text,
-                          'SwotDescription': _swotDescriptionController.text,
+                          'customerTitle': _customerTitleController.text,
+                          
                         });
                     }
-                    print("$swotTitle $swotDescription");
+                    print("$customerTitle");
                   Navigator.pop(context);
                   }
             },
@@ -139,8 +126,8 @@ class SwotDetailsState extends State<SwotDetails> {
                         onTap: (){
 
                         },
-                        controller: _swotTitleController,
-                        onSaved: (value) => swotTitle = value,
+                        controller: _customerTitleController,
+                        onSaved: (value) => customerTitle = value,
                         validator: (val) =>  val.length == 0? "Please enter title" : null,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),
@@ -152,22 +139,7 @@ class SwotDetailsState extends State<SwotDetails> {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                     ),
-                    Theme(
-                      data: ThemeData(
-                        primaryColor: Colors.black,
-                        primaryColorDark: Uidata.primaryColor,
-                      ),
-                      child: TextFormField(
-                        onSaved: (value) => swotDescription = value,
-                        validator: (val) =>  val.length == 0? "Please enter description" : null,
-                        controller: _swotDescriptionController,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: labelColor),
-                          labelText: "Description",
-                        ),
-                        keyboardType: TextInputType.text,
-                      ),
-                    ),
+                    
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                     ),
@@ -209,6 +181,3 @@ class SwotDetailsState extends State<SwotDetails> {
 
 
 }
-
-
-

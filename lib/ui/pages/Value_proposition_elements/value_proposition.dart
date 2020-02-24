@@ -1,29 +1,36 @@
-//import 'package:copy_cat/ui/pages/model_details.dart';
-import 'package:copy_cat/ui/pages/model_details.dart';
-import 'package:flutter/material.dart';
 import 'package:copy_cat/models/db_manager.dart';
-import 'utils/uidata.dart';
+import 'package:copy_cat/ui/pages/Value_proposition_elements/value_prop_elements.dart' as customer;
+import 'package:copy_cat/ui/utils/uidata.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 
-class CanvasHome extends StatefulWidget {
-  @override
-  _CanvasHomeState createState() => _CanvasHomeState();
+
+
+
+class ValueDashboard extends StatefulWidget{
+ @override 
+
+   ValueDashboardState createState() => ValueDashboardState();
+
+
 }
+class ValueDashboardState extends State<ValueDashboard> {
+  @override 
 
-class _CanvasHomeState extends State<CanvasHome> {
-  @override
-  Widget build(BuildContext context) {
+  
+   Widget build(BuildContext context) {
     
     return Container(
       child: FutureBuilder(
-       future: DBManagerModel.getList(),
+       future: DBManagerCustomer.getCustomerList(),
         builder: (context, snapshot) {
           final notes = snapshot.data;
           
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
               itemBuilder: (context, index) {
-                String modelTitle = notes[index]['ModelTitle'];
+                String customerTitle = notes[index]['customerTitle'];
                 
                 return Padding(
                       padding: const EdgeInsets.all(10),
@@ -35,35 +42,30 @@ class _CanvasHomeState extends State<CanvasHome> {
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
-                                     ModelTitle(notes[index]['ModelTitle']),
+                                     CustomerTitle(notes[index]['customerTitle']),
                                     ],
                                   ),
-                                  Row(
-                                    children: <Widget>[
-                                      ModelDescription(notes[index]['ModelDescription']),
-                                      // Text(description)
-                                    ],
-                                  ),
+                                  
                                   Row(
                                     children: <Widget>[
                                       FlatButton(
                                         color: Colors.white,
-                                        child: Text("MODEL DETAILS", style: TextStyle(color: Uidata.primaryColor),),
+                                        child: Text("Customer Details", style: TextStyle(color: Uidata.primaryColor),),
                                         onPressed: (){
                                                           
                                       },
                                     ),
                                     FlatButton(
                                       color: Colors.white,
-                                      child: Text("EDIT MODEL", style: TextStyle(color: Uidata.primaryColor),),
+                                      child: Text("EDIT Customer", style: TextStyle(color: Uidata.primaryColor),),
                                       onPressed: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => ModelDetails(modelTitle, notes[index]['id'])));
+                                      //Navigator.push(context, MaterialPageRoute(builder: (context) => ModelDetails(modelTitle, notes[index]['id'])));
                                       },
                                     ),
                                     IconButton(
                                        icon: Icon(Icons.delete),
                                        onPressed: (){
-                                         DBManagerModel.deleteModel(notes[index]['id']);
+                                         DBManagerCustomer.deleteCustomer(notes[index]['id']);
                                      },
                                     ),
                                   ],
@@ -83,24 +85,19 @@ class _CanvasHomeState extends State<CanvasHome> {
         },
       ),
     );
-
-   
-
-
-
-
-
-
-  }
+  
+}
 
 }
 
 
 
-class ModelTitle extends StatelessWidget {
+
+
+class CustomerTitle extends StatelessWidget {
   final String _title;
 
-  ModelTitle(this._title);
+  CustomerTitle(this._title);
 
   @override
   Widget build(BuildContext context) {
@@ -114,19 +111,32 @@ class ModelTitle extends StatelessWidget {
   }
 }
 
-class ModelDescription extends StatelessWidget {
-  String description;
-
-  ModelDescription(this.description);
+class ValueHome extends StatelessWidget{
 
   @override
-  Widget build(BuildContext context) {
-    return Text(description, style: TextStyle(color: Colors.grey.shade600), maxLines: 2,
-      overflow: TextOverflow.ellipsis,
+   Widget build(BuildContext context) {
+    
+    return Scaffold(
+//      drawer: SideDrawer(),
+      
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      appBar: AppBar(
+        title: Text("Value Proposiion"),
+        
+      ),
+       floatingActionButton: FloatingActionButton(
+        backgroundColor: Uidata.btnColor,
+        onPressed: (){
+           Navigator.push(context, MaterialPageRoute(builder: (context) => customer.CustomerDetails(customer.NoteMode.Adding, null)));
+        },
+        child: Icon(Icons.add),
+      ),
+      body:
+          ValueDashboard(),
+          
+        
+      
+
     );
   }
 }
-
-
-
-

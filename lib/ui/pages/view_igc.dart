@@ -1,26 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';
 import 'package:copy_cat/models/db_manager.dart';
+import 'package:copy_cat/models/db2.dart';
+import 'package:copy_cat/ui/pages/swot_elements/final_table.dart';
+
+import 'igc.dart' as igc;
+
+
+enum NoteMode { 
+  Editing,
+  Adding
+}
 
 final formkey = new GlobalKey<FormState> ();
 
 
-class ViewPost extends StatefulWidget {
+class ViewIGC extends StatefulWidget {
   final String postName;
-  final int modelId;
-  ViewPost(this.postName, this.modelId);
+  final String question;
+
+
+
+  ViewIGC(this.postName, this.question);
 
   @override
-  _ViewPostState createState() => _ViewPostState();
+  _ViewIGCState createState() => _ViewIGCState();
 }
 
-class _ViewPostState extends State<ViewPost> {
+class _ViewIGCState extends State<ViewIGC> {
+
+  returnFunction(String name){
+    if(widget.postName == "Challenges"){
+      return DBManagerGuide.getListChall2();
+    }else if(widget.postName == "Solutions"){
+      return DBManagerGuide.getListSol();
+    } else if(widget.postName == "Impact Gap"){
+      return DBManagerGuide.getListImp();
+    }
+  }
+
+  returnPageFunction(String name, String question) {
+    if(widget.postName == "Challenges"){
+      return igc.ChallengeNote(igc.NoteMode.Adding, null, question);
+    }else if(widget.postName == "Solutions"){
+      return igc.SolutionNote(igc.NoteMode.Adding, null, question);
+    } else if(widget.postName == "Impact Gap"){
+      return igc.ImpactNote(igc.NoteMode.Adding, null, question);
+    }
+  }
 
 
   @override
   void initState(){
     super.initState();
-    print(widget.postName);
   }
 
   @override
@@ -28,16 +60,25 @@ class _ViewPostState extends State<ViewPost> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.postName),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            color: Colors.white,
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => returnPageFunction(widget.postName, widget.question)));
+            },
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CanvasNote(NoteMode.Adding, null, widget.postName, widget.modelId)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => IGCTableFinal()));
         },
         backgroundColor: Uidata.btnColor,
-        child: Icon(Icons.add),
+        child: Icon(Icons.arrow_forward)
       ),
       body: FutureBuilder(
-       future: DBManagerViews.getLists(widget.postName, widget.modelId),
+       future: returnFunction(widget.postName),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final notes = snapshot.data;
@@ -45,7 +86,8 @@ class _ViewPostState extends State<ViewPost> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CanvasNote(NoteMode.Editing, notes[index], widget.postName, widget.modelId)));
+                    //TODO SUPPOSED TO HAVE AN EDITING FUNCTION WILL DO THAT SOON LOL
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => returnPageFunction(widget.postName, widget.question)));
                   },
                   child: Card(
                     child: Padding(
@@ -53,9 +95,11 @@ class _ViewPostState extends State<ViewPost> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          _NoteTitle(notes[index]['title']),
-                          Container(height: 4,),
-                          _NoteDescription(notes[index]['description'])
+                          _NoteTitle(notes[index]['question']),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          _NoteDescription(notes[index]['title']),
                         ],
                       ),
                     ),
@@ -106,7 +150,7 @@ class _NoteDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(description, style: TextStyle(color: Colors.grey.shade600), maxLines: 2,
+    return Text("Answer: " + description, style: TextStyle(color: Colors.grey.shade600), maxLines: 2,
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -115,19 +159,14 @@ class _NoteDescription extends StatelessWidget {
 
 
 
-enum NoteMode {
-  Editing,
-  Adding
-}
 
 class CanvasNote extends StatefulWidget {
 
   final NoteMode noteMode;
   final Map<String, dynamic> note;
   final String parentPageName;
-  int modelId;
 
-  CanvasNote(this.noteMode, this.note, this.parentPageName, this.modelId);
+  CanvasNote(this.noteMode, this.note, this.parentPageName);
 
   @override
   CanvasNoteState createState() {
@@ -168,7 +207,6 @@ class CanvasNoteState extends State<CanvasNote> {
       });
     });
 
-    testId = widget.modelId.toString();
 
     _descriptionController.addListener(() {
       setState(() {
@@ -242,7 +280,6 @@ class CanvasNoteState extends State<CanvasNote> {
                         }, widget.parentPageName);
                         
                     }
-                    print("$title, $noteDescription, " + widget.modelId.toString());
                   Navigator.pop(context);
                   }
                 }),

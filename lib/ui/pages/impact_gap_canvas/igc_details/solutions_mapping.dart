@@ -11,55 +11,67 @@ enum NoteMode {
 
 final formkey = new GlobalKey<FormState> ();
 
-class SwotDetails extends StatefulWidget {
+class SolutionsDetails extends StatefulWidget {
 
   final NoteMode noteMode;
   final Map<String, dynamic> note;
 
-  SwotDetails(this.noteMode, this.note);
+  SolutionsDetails(this.noteMode, this.note);
 
   // final cameras;
   // Newswot(this.cameras);
 
 
   @override
-  SwotDetailsState createState() => SwotDetailsState();
+  SolutionsDetailsState createState() => SolutionsDetailsState();
 }
 
-class SwotDetailsState extends State<SwotDetails> {
+class SolutionsDetailsState extends State<SolutionsDetails> {
 
-  String swotTitle;
-  String swotDescription;
-
-
-
+  String solutionsTitle;
+  String solutionsDescription;
+  String solutionsFor, solutionsBy;
 
 
-  TextEditingController _swotTitleController = new TextEditingController();
-  TextEditingController _swotDescriptionController = new TextEditingController();
 
+
+  TextEditingController _solutionsTitleController = new TextEditingController();
+  TextEditingController _solutionsDescriptionController = new TextEditingController();
+  TextEditingController _solutionsForController = new TextEditingController();
+  TextEditingController _solutionsByController = new TextEditingController();
 
   Color labelColor = Colors.grey;
 
   @override
   void initState(){
     super.initState();
-    _swotDescriptionController.addListener(
+    _solutionsDescriptionController.addListener(
       (){
         setState(() {
-          swotDescription = _swotDescriptionController.text;
+          solutionsDescription = _solutionsDescriptionController.text;
         });
       }
     );
-    _swotTitleController.addListener(
+    _solutionsTitleController.addListener(
       (){
         setState(() {
-          swotTitle = _swotTitleController.text;
+          solutionsTitle = _solutionsTitleController.text;
         });
       }
     );
 
-   
+    _solutionsByController.addListener((){
+        setState(() {
+          solutionsBy = _solutionsByController.text;
+        });
+      }
+    );
+
+    _solutionsForController.addListener((){
+      setState(() {
+        solutionsFor = _solutionsForController.text;
+      });
+    });
   }
 
   bool validateForm() {
@@ -84,25 +96,25 @@ class SwotDetailsState extends State<SwotDetails> {
             Navigator.pop(context);
           },
         ),
-        title: Text("New SWOT "),
+        title: Text("New Solutions "),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.done),
             onPressed: () {
               if(validateForm()) {
                       if (widget.noteMode == NoteMode.Adding) {
-                        DBManagerSwot.insertSwot({
-                          'SwotTitle': swotTitle,
-                          'SwotDescription': swotDescription,
+                        DBManagerSolutions.insertSolutions({
+                          'solutionsTitle': solutionsTitle,
+                          'solutionsDescription': solutionsDescription,
                         });
                       } else if (widget?.noteMode == NoteMode.Editing) {
-                        DBManagerSwot.updateModel({
+                        DBManagerSolutions.updateSolutions({
                           'id': widget.note['id'],
-                          'SwotTitle': _swotTitleController.text,
-                          'SwotDescription': _swotDescriptionController.text,
+                          'solutionsTitle': _solutionsTitleController.text,
+                          'solutionsDescription': _solutionsDescriptionController.text,
                         });
                     }
-                    print("$swotTitle $swotDescription");
+                    print("$solutionsTitle $solutionsDescription");
                   Navigator.pop(context);
                   }
             },
@@ -139,8 +151,8 @@ class SwotDetailsState extends State<SwotDetails> {
                         onTap: (){
 
                         },
-                        controller: _swotTitleController,
-                        onSaved: (value) => swotTitle = value,
+                        controller: _solutionsTitleController,
+                        onSaved: (value) => solutionsTitle = value,
                         validator: (val) =>  val.length == 0? "Please enter title" : null,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),
@@ -158,9 +170,9 @@ class SwotDetailsState extends State<SwotDetails> {
                         primaryColorDark: Uidata.primaryColor,
                       ),
                       child: TextFormField(
-                        onSaved: (value) => swotDescription = value,
+                        onSaved: (value) => solutionsDescription = value,
                         validator: (val) =>  val.length == 0? "Please enter description" : null,
-                        controller: _swotDescriptionController,
+                        controller: _solutionsDescriptionController,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),
                           labelText: "Description",
@@ -209,6 +221,3 @@ class SwotDetailsState extends State<SwotDetails> {
 
 
 }
-
-
-

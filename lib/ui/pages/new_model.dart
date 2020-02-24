@@ -1,7 +1,16 @@
-import 'package:copy_cat/ui/dashboard.dart';
+ import 'package:copy_cat/ui/dashboard.dart';
+import 'package:copy_cat/ui/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';
+import 'package:copy_cat/models/db_manager.dart';
 // import 'package:camera/camera.dart';
+
+
+
+enum NoteMode { 
+  Editing,
+  Adding
+}
 
 
 
@@ -9,8 +18,11 @@ final formkey = new GlobalKey<FormState> ();
 
 class NewModel extends StatefulWidget {
 
+  final Map<String, dynamic> note;
+  final NoteMode noteMode;
+
   // final cameras;
-  // NewModel(this.cameras);
+  NewModel(this.note, this.noteMode);
 
 
   @override
@@ -19,11 +31,63 @@ class NewModel extends StatefulWidget {
 
 class _NewModelState extends State<NewModel> {
 
+  String modelTitle;
+  String modelDescription;
+  String modelFor, modelBy;
+
+  final form = formkey.currentState;
 
 
-  TextEditingController _titleController;
+  TextEditingController _modelTitleController = new TextEditingController();
+  TextEditingController _modelDescriptionController = new TextEditingController();
+  TextEditingController _modelForController = new TextEditingController();
+  TextEditingController _modelByController = new TextEditingController();
   Color labelColor = Colors.grey;
+  
+  
 
+
+  @override
+  void initState(){
+    super.initState();
+    _modelDescriptionController.addListener(
+      (){
+        setState(() {
+          modelDescription = _modelDescriptionController.text;
+        });
+      }
+    );
+    _modelTitleController.addListener(
+      (){
+        setState(() {
+          modelTitle = _modelTitleController.text;
+        });
+      }
+    );
+
+    _modelByController.addListener((){
+        setState(() {
+          modelBy = _modelTitleController.text;
+        });
+      }
+    );
+
+    _modelForController.addListener((){
+      setState(() {
+        modelFor = _modelForController.text;
+      });
+    });
+  }
+
+  bool validateForm() {
+    if(formkey.currentState.validate()){
+      formkey.currentState.save();
+      return true;
+
+    }else{
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +96,35 @@ class _NewModelState extends State<NewModel> {
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: (){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+            Navigator.pop(context);
+            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
           },
         ),
-        title: Text("New Model"),
+        title: Text("New Canvas"),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.done),
             onPressed: () {
-
+              if(validateForm()) {
+                      if (widget.noteMode == NoteMode.Adding) {
+                        DBManagerModel.insertModel({
+                          'ModelTitle': modelTitle,
+                          'ModelDescription': modelDescription,
+                          'For': modelFor,
+                          'By': modelBy
+                        });
+                      } else if (widget?.noteMode == NoteMode.Editing) {
+                        DBManagerModel.updateModel({
+                          'id': widget.note['id'],
+                          'ModelTitle': _modelTitleController.text,
+                          'ModelDescription': _modelDescriptionController.text,
+                          'For': modelFor,
+                          'By': modelBy
+                        });
+                    }
+                    print("$modelTitle, $modelDescription, $modelFor, $modelBy");
+                  Navigator.pop(context);
+                  }
             },
           )
         ],
@@ -75,7 +159,9 @@ class _NewModelState extends State<NewModel> {
                         onTap: (){
 
                         },
-                        controller: _titleController,
+                        controller: _modelTitleController,
+                        onSaved: (value) => modelTitle = value,
+                        validator: (val) =>  val.length == 0? "Please enter title" : null,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),
                           labelText: "Title",
@@ -92,7 +178,9 @@ class _NewModelState extends State<NewModel> {
                         primaryColorDark: Uidata.primaryColor,
                       ),
                       child: TextFormField(
-                        controller: _titleController,
+                        controller: _modelDescriptionController,
+                        onSaved: (value) => modelDescription = value,
+                        validator: (val) =>  val.length == 0? "Please enter description" : null,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),
                           labelText: "Description",
@@ -109,7 +197,9 @@ class _NewModelState extends State<NewModel> {
                         primaryColorDark: Uidata.primaryColor,
                       ),
                       child: TextFormField(
-                        controller: _titleController,
+                        controller: _modelForController,
+                        onSaved: (value) => modelFor = value,
+                        validator: (val) =>  val.length == 0? "Please enter title" : null,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),
                           labelText: "For",
@@ -126,7 +216,9 @@ class _NewModelState extends State<NewModel> {
                         primaryColorDark: Uidata.primaryColor,
                       ),
                       child: TextFormField(
-                        controller: _titleController,
+                        controller: _modelByController,
+                        onSaved: (value) => modelBy = value,
+                        validator: (val) =>  val.length == 0? "Please enter title" : null,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),
                           labelText: "By",
