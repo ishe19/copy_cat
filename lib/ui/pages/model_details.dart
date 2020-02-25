@@ -1,7 +1,5 @@
 import 'package:copy_cat/models/db_manager.dart';
 import 'package:copy_cat/ui/pages/canvas_elements/canvas_model.dart';
-import 'package:copy_cat/ui/pages/impact_gap_canvas/igc_details/challenge_mapping_details.dart' as challengeDetail;
-import 'package:copy_cat/ui/pages/impact_gap_canvas/igc_details/solutions_mapping.dart' as solutionsDetails;
 import 'package:copy_cat/ui/pages/swot_elements/final_table.dart';
 import 'package:copy_cat/ui/pages/view_post.dart';
 import 'package:flutter/material.dart';
@@ -153,32 +151,7 @@ class _PagesState extends State<Pages> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: SpeedDial(
-        animatedIcon: AnimatedIcons.menu_close,
-        children: [
-        SpeedDialChild(
-          child: Icon(Icons.note_add),
-          label: "Challenge Mapping",
-          onTap: (){
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => challengeDetail.ChallengeDetails( challengeDetail.NoteMode.Adding, null)));
-          }
-        ),
-        SpeedDialChild(
-          child: Icon(Icons.note_add),
-          label: "Impact gaps",
-          onTap: (){
-                    //    Navigator.push(context, MaterialPageRoute(builder: (context) => swotDetail.SwotDetails(swotDetail.NoteMode.Adding, null)));
-          },
-        ),
-          SpeedDialChild(
-          child: Icon(Icons.note_add),
-          label: "Solutions mapping",
-          onTap: (){
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => solutionsDetails.SolutionsDetails( solutionsDetails.NoteMode.Adding, null)));
-          },
-        ),
-        ]
-      ),
+     
       appBar: AppBar(
         title: Text("IGC"),
         centerTitle: true,

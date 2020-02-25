@@ -18,7 +18,7 @@ class CustomerDetails extends StatefulWidget {
   CustomerDetails(this.noteMode, this.note);
 
   // final cameras;
-  // Newswot(this.cameras);
+  // Newswot(this.cameras);//
 
 
   @override

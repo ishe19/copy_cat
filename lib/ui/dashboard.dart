@@ -68,7 +68,7 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
           child: Icon(Icons.note_add),
           label: "Value proposition",
           onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ValueHome()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ValueDashboard()));
           },
         ),
         ]
