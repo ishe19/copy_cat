@@ -1,3 +1,4 @@
+import 'package:copy_cat/ui/pages/swot_elements/final_table.dart';
 import 'package:copy_cat/ui/pages/view_igc.dart';
 import 'package:flutter/material.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';
@@ -12,14 +13,35 @@ enum NoteMode {
   Adding
 }
 
+returnPageFunction(String name, String question) {
+    if(name == "Challenges"){
+      return ChallengeNote(NoteMode.Adding, null, question);
+    }else if(name == "Solutions"){
+      return SolutionNote(NoteMode.Adding, null, question);
+    } else if(name == "Impact Gap"){
+      return ImpactNote(NoteMode.Adding, null, question);
+    }
+  }
+
 
 
 
 class Challenges extends StatelessWidget {
+
+
+  
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => IGCTableFinal()));
+        },
+        child: Icon(Icons.arrow_forward)
+      ),
+      body: SafeArea( 
         child: ListView(
           children: <Widget>[
             Card(
@@ -31,141 +53,233 @@ class Challenges extends StatelessWidget {
               width: MediaQuery.of(context).size.width / 1.5,
               child: Text("What is happening, what is the impact of the challenge, and what is holding the challenge in place", style: TextStyle(color: Colors.white),),),
           ),
-            ListTile(
-              leading:  IconButton(
-          icon: Icon(Icons.info),
-          onPressed: (){return Alert(
-              context: context,
-              title: 'guiding question',
-              desc:'How do those impacted by the challenge describe the challenge? How do they describe the effects?How is this challenge related to other challenges?',
-              buttons: [
-                DialogButton(
-                child: Text('Got it'),
-                onPressed: (){
-                                    Navigator.pop(context);
+            Card(
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading:  IconButton(
+                  icon: Icon(Icons.info),
+                  onPressed: (){return Alert(
+                        context: context,
+                        title: 'guiding question',
+                        desc:'How do those impacted by the challenge describe the challenge? How do they describe the effects?How is this challenge related to other challenges?',
+                        buttons: [
+                          DialogButton(
+                          child: Text('Got it'),
+                          onPressed: (){
+                            Navigator.pop(context);
 
-                },)
-              ]).show();
-              },
-              ),
-              title: Text('How do you describe the challenge?'),
-              subtitle: Text('guiding questions'),
-                            onTap: (){
-                              pushChallengePage(context, "How do you describe the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
-                          ),
-                          Divider(
-                            color:  Colors.black,
-                          ),
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'guiding question',
-                            desc:'What are the numbers? Who or what is impacted(where, how many, in what way?)What does the research say?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
-                            ),
-                            title: Text('What is the impact of the challenge?'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                              pushChallengePage(context, "What is the impact of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
-                          ),Divider(
-                            color:  Colors.black,
-                          ),
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'guiding question',
-                            desc:'What is causing the challenge to persist? Who stands to benefit from the challenge continuing to persist?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
-                            ),
-                            title: Text('What is the cause of the challenge?'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                              pushChallengePage(context, "What is the cause of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
-                          ),
-                          Divider(
-                            color:  Colors.black,
-                          ),
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'guiding question',
-                            desc:'How has the challenge changed over time? What is the projected scope of the challenge in the future?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
-                            ),
-                            title: Text('What is the history and future of the challenge?'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                              pushChallengePage(context, "What is the history and future of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
-                          ),
-                          Divider(
-                            color:  Colors.black,
-                          ),
-                          Card(
-                          // height: 200,
-                          // width: 250.0,
-                          color: Colors.blue,
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            child: Text("Hints: Tap on the information icon for a guiding question. ", style: TextStyle(color: Colors.white),),),
-                        ),
-                        Card(
-                          // height: 200,
-                          // width: 250.0,
-                          color: Colors.blue.shade700,
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            child: Text("Hints: tap on the tile to add or edit your answer", style: TextStyle(color: Colors.white),),),
-                        ),
-                        ],
-                      ),
+                          },)
+                        ]).show();
+                        },
                     ),
-                    );
-                }
+                    title: Text('How do you describe the challenge?'),
+                    subtitle: Text('guiding questions'),
+                      onTap: (){
+                        
+                        // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
+                      },
+                    ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("Add", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushChallengePage(context, "How do you describe the challenge?", "Add");
+                    },
+                  ),
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("View", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushChallengePage(context, "How do you describe the challenge?", "View");
+                    },
+                  ),
+              ],)
+              ],
+            ),
+            ),
+            Divider(
+              color:  Colors.black,
+            ),
+            Card(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: IconButton(
+                    icon: Icon(Icons.info),
+                    onPressed: (){return Alert(
+                    context: context,
+                    title: 'guiding question',
+                    desc:'What are the numbers? Who or what is impacted(where, how many, in what way?)What does the research say?',
+                    buttons: [
+                      DialogButton(
+                      child: Text('Got it'),
+                      onPressed: (){
+                                          Navigator.pop(context);
 
-                void pushChallengePage(BuildContext context, question) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewIGC("Challenges", question)));
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => challengeDetail.ChallengeDetails(challengeDetail.NoteMode.Adding, null)));
-                  }
+                      },)
+                    ]).show();
+                    },
+                    ),
+                    title: Text('What is the impact of the challenge?'),
+                    subtitle: Text('guiding questions'),
+                    onTap: (){
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
+                    },
+                  ),
+                  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("Add", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushChallengePage(context, "What is the impact of the challenge?", "Add");
+                    },
+                  ),
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("View", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushChallengePage(context, "What is the impact of the challenge?", "View");
+                    },
+                  ),
+              ],)
+                ],
+              ),
+            ),Divider(
+              color:  Colors.black,
+            ),
+            Card(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: IconButton(
+                    icon: Icon(Icons.info),
+                    onPressed: (){return Alert(
+                    context: context,
+                    title: 'guiding question',
+                    desc:'What is causing the challenge to persist? Who stands to benefit from the challenge continuing to persist?',
+                    buttons: [
+                      DialogButton(
+                      child: Text('Got it'),
+                      onPressed: (){
+                                          Navigator.pop(context);
+
+                      },)
+                    ]).show();
+                    },
+                    ),
+                    title: Text('What is the cause of the challenge?'),
+                    subtitle: Text('guiding questions'),
+                    
+                  ),
+                  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("Add", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushChallengePage(context, "What is the cause of the challenge?", "Add");
+                    },
+                  ),
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("View", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushChallengePage(context, "What is the cause of the challenge?", "View");
+                    },
+                  ),
+              ],)
+                ],
+              ),
+            ),
+            Divider(
+              color:  Colors.black,
+            ),
+            Card(
+                child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: IconButton(
+                    icon: Icon(Icons.info),
+                    onPressed: (){return Alert(
+                    context: context,
+                    title: 'guiding question',
+                    desc:'How has the challenge changed over time? What is the projected scope of the challenge in the future?',
+                    buttons: [
+                      DialogButton(
+                      child: Text('Got it'),
+                      onPressed: (){
+                        Navigator.pop(context);
+
+                      },)
+                    ]).show();
+                    },
+                    ),
+                    title: Text('What is the history and future of the challenge?'),
+                    subtitle: Text('guiding questions'),
+                  ),
+                  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("Add", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushChallengePage(context, "What is the history and future of the challenge?", "Add");
+                    },
+                  ),
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("View", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushChallengePage(context, "What is the history and future of the challenge?", "View");
+                    },
+                  ),
+              ],)
+                ],
+              ),
+            ),
+            Divider(
+              color:  Colors.black,
+            ),
+            Card(
+            // height: 200,
+            // width: 250.0,
+            color: Colors.blue,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: Text("Hints: Tap on the information icon for a guiding question. ", style: TextStyle(color: Colors.white),),),
+          ),
+          Card(
+            // height: 200,
+            // width: 250.0,
+            color: Colors.blue.shade700,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: Text("Hints: tap on the tile to add or edit your answer", style: TextStyle(color: Colors.white),),),
+          ),
+          ],
+        ),
+      ),
+      );
+  }
+
+  void pushChallengePage(BuildContext context, question, String type) {
+    if(type == "Add"){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => returnPageFunction("Challenges", question)));
+    }else if(type == "View"){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewIGC("Challenges", question)));
+    }
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => challengeDetail.ChallengeDetails(challengeDetail.NoteMode.Adding, null)));
+    }
 
 
                 }
@@ -175,6 +289,12 @@ class ImpactGap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => IGCTableFinal()));
+        },
+        child: Icon(Icons.arrow_forward)
+      ),
       body: SafeArea(
         child: ListView(
           children: <Widget>[
@@ -190,113 +310,194 @@ class ImpactGap extends StatelessWidget {
           Divider(
               color:  Colors.black,
             ),
-            ListTile(
-              leading: IconButton(
+            Card(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: IconButton(
           icon: Icon(Icons.info),
           onPressed: (){
-            return Alert(
-              context: context,
-              title: 'guiding question',
-              desc:'Who or what is not being served and what is missing to bridge that gap? What actions can be taken to fill those gaps?',
-              buttons: [
-                DialogButton(
-                child: Text('Got it'),
-                onPressed: (){
-                  Navigator.pop(context);
+                  return Alert(
+                    context: context,
+                    title: 'guiding question',
+                    desc:'Who or what is not being served and what is missing to bridge that gap? What actions can be taken to fill those gaps?',
+                    buttons: [
+                      DialogButton(
+                      child: Text('Got it'),
+                      onPressed: (){
+                        Navigator.pop(context);
 
-                },)
-              ]).show();
+                      },)
+                    ]).show();
           },
         ),
-              title: Text('Where are the gaps between the challenge and solutions?'),
-              subtitle: Text('guiding questions'),
-              onTap: (){
-                pushImpactPage(context, 'Where are the gaps between the challenge and solutions?' );
-                //  Navigator.push(context, MaterialPageRoute(builder: (context) => ImpactNote(NoteMode.Adding, null, "Where are the gaps between the challenges and solutions?")));
-              },
+                    title: Text('Where are the gaps between the challenge and solutions?'),
+                    subtitle: Text('guiding questions'),                    
+                  ),
+                  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("Add", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushImpactPage(context, "Where are the gaps between the challenge and solutions?", "Add");
+                    },
+                  ),
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("View", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushImpactPage(context, "Where are the gaps between the challenge and solutions?", "View");
+                    },
+                  ),
+              ],)
+                ],
+              ),
             ),
+
             Divider(
               color:  Colors.black,
             ),
-            ListTile(
-              leading: IconButton(
+            Card(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: IconButton(
           icon: Icon(Icons.info),
           onPressed: (){
           return Alert(
-              context: context,
-              title: 'guiding question',
-              desc:'What is missing(specific regulations, knowledge sharing, new efforts,partnership etc)that would further link up the solutions and achieve greater collective impact?',
-              buttons: [
-                DialogButton(
-                child: Text('Got it'),
-                onPressed: (){
-                                    Navigator.pop(context);
+                    context: context,
+                    title: 'guiding question',
+                    desc:'What is missing(specific regulations, knowledge sharing, new efforts,partnership etc)that would further link up the solutions and achieve greater collective impact?',
+                    buttons: [
+                      DialogButton(
+                      child: Text('Got it'),
+                      onPressed: (){
+                                          Navigator.pop(context);
 
-                },)
-              ]).show();
+                      },)
+                    ]).show();
           },
         ),
-              title: Text('What are the gaps within the solutions?'),
-              subtitle: Text('guiding questions'),
-              onTap: (){
-                pushImpactPage(context, 'What are the gaps within the solutions?');
-                //  Navigator.push(context, MaterialPageRoute(builder: (context) => ImpactNote(NoteMode.Adding, null, "What are the gaps within the solutions?")));
-              },
+                    title: Text('What are the gaps within the solutions?'),
+                    subtitle: Text('guiding questions'),
+                  ),
+                  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("Add", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushImpactPage(context, "What are the gaps within the solutions?", "Add");
+                    },
+                  ),
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("View", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushImpactPage(context, "What are the gaps within the solutions?", "View");
+                    },
+                  ),
+              ],)
+                ],
+              ),
             ),Divider(
               color:  Colors.black,
             ),
-            ListTile(
-              leading: IconButton(
+            Card(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: IconButton(
           icon: Icon(Icons.info),
           onPressed: (){
-            return Alert(
-              context: context,
-              title: 'guiding question',
-              desc:'What is being overlooked and what are the unintended negative consequences of the existing efforts? What specific key opportunities could unlock future impact?',
-              buttons: [
-                DialogButton(
-                child: Text('Got it'),
-                onPressed: (){
-                                    Navigator.pop(context);
+                  return Alert(
+                    context: context,
+                    title: 'guiding question',
+                    desc:'What is being overlooked and what are the unintended negative consequences of the existing efforts? What specific key opportunities could unlock future impact?',
+                    buttons: [
+                      DialogButton(
+                      child: Text('Got it'),
+                      onPressed: (){
+                        Navigator.pop(context);
 
-                },)
-              ]).show();
+                      },)
+                    ]).show();
           },
         ),
-              title: Text('Where are the unaddressed obstacles?'),
-              subtitle: Text('guiding questions'),
-              onTap: (){
-                pushImpactPage(context, 'Where are the unaddressed obstacles?' );
-                //  Navigator.push(context, MaterialPageRoute(builder: (context) => ImpactNote(NoteMode.Adding, null, "Where are the unaddressed obstacles?")));
-              },
+                    title: Text('Where are the unaddressed obstacles?'),
+                    subtitle: Text('guiding questions'),                  
+                  ),
+                  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("Add", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushImpactPage(context, "Where are the unaddressed obstacles?", "Add");
+                    },
+                  ),
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("View", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushImpactPage(context, "Where are the unaddressed obstacles?", "View");
+                    },
+                  ),
+              ],)
+                ],
+              ),
             ),
             Divider(
               color:  Colors.black,
             ),
-            ListTile(
-              leading: IconButton(
+            Card(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: IconButton(
           icon: Icon(Icons.info),
           onPressed: (){
-            return Alert(
-              context: context,
-              title: 'guiding question',
-              desc:'From yout research and interviews, what key lessons could you share with anyone who wants to impact change in this sector? What are the biggest opportunities for impact?',
-              buttons: [
-                DialogButton(
-                child: Text('Got it'),
-                onPressed: (){
-                                    Navigator.pop(context);
+                  return Alert(
+                    context: context,
+                    title: 'guiding question',
+                    desc:'From yout research and interviews, what key lessons could you share with anyone who wants to impact change in this sector? What are the biggest opportunities for impact?',
+                    buttons: [
+                      DialogButton(
+                      child: Text('Got it'),
+                      onPressed: (){
+                        Navigator.pop(context);
 
-                },)
-              ]).show();
+                      },)
+                    ]).show();
           },
         ),
-              title: Text('What are the key lessons learned?'),
-              subtitle: Text('guiding questions'),
-              onTap: (){
-                pushImpactPage(context, 'What are the key lessons learned?');
-                //  Navigator.push(context, MaterialPageRoute(builder: (context) => SolutionNote(NoteMode.Adding, null, "What are the key lessons learned?")));
-              },
+                    title: Text('What are the key lessons learned?'),
+                    subtitle: Text('guiding questions'),
+                  ),
+                  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("Add", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushImpactPage(context, "What are the key lessons learned?", "Add");
+                    },
+                  ),
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("View", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushImpactPage(context, "What are the key lessons learned?", "View");
+                    },
+                  ),
+              ],)
+                ],
+              ),
             ),
             Divider(
               color:  Colors.black,
@@ -325,8 +526,12 @@ class ImpactGap extends StatelessWidget {
       );
   }
 
-  void pushImpactPage(BuildContext context, String question) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewIGC("Impact Gap", question)));
+  void pushImpactPage(BuildContext context, String question, String type) {
+    if(type == "Add"){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => returnPageFunction("Impact Gap", question)));
+    }else if(type == "View"){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ViewIGC("Impact Gap", question)));
+    }
     }
 
 
@@ -338,6 +543,12 @@ class Solutions extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => IGCTableFinal()));
+        },
+        child: Icon(Icons.arrow_forward)
+      ),
       body:  ListView(
           children: <Widget>[
             Card(
@@ -349,65 +560,145 @@ class Solutions extends StatelessWidget {
               width: MediaQuery.of(context).size.width / 1.5,
               child: Text("What models  are already being tried, what is working and what is not, and what resources are available?", style: TextStyle(color: Colors.white),),),
           ),
-            ListTile(
-              leading: IconButton(
+            Card(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: IconButton(
           icon: Icon(Icons.info),
           onPressed: (){return Alert(
-              context: context,
-              title: 'guiding question',
-              desc:'What resources are available that can be drawn upon? What efforts are already being tried which could directly impact the callenge? what are the different models? How are they joined up, or not?',
-              buttons: [
-                DialogButton(
-                child: Text('Got it'),
-                onPressed: (){
-                                    Navigator.pop(context);
-
-                },)
-              ]).show();
-              },
+                    context: context,
+                    title: 'guiding question',
+                    desc:'What resources are available that can be drawn upon? What efforts are already being tried which could directly impact the callenge? what are the different models? How are they joined up, or not?',
+                    buttons: [
+                      DialogButton(
+                      child: Text('Got it'),
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },)
+                    ]).show();
+                    },
+                    ),
+                    title: Text('What is happening locally?'),
+                    subtitle: Text('guiding questions'),
+                    ),
+                    Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("Add", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushSolutionsPage(context, "What is happening locally?", "Add");
+                    },
+                  ),
+                  FlatButton(
+                    color: Uidata.btnColor,
+                    child: Text("View", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      pushSolutionsPage(context, "What are the key lessons learned?", "View");
+                    },
+                  ),
+              ],)
+                ],
               ),
-              title: Text('What is happening locally?'),
-              subtitle: Text('guiding questions'),
-              onTap: (){
-                pushSolutionsPage(context, 'What is happening locally?');
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => SolutionNote(NoteMode.Adding, null, "What is happening locally?")));
-                              },
+            ),
+                            Divider(
+                              color:  Colors.black,
+                            ),
+                            Card(
+                              child: Column(
+                                children: <Widget>[
+                                  ListTile(
+                                    leading: Icon(Icons.info),
+                                    title: Text('What is happening globally?'),
+                                    subtitle: Text('guiding questions'),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      FlatButton(
+                                        color: Uidata.btnColor,
+                                        child: Text("Add", style: TextStyle(color: Colors.white)),
+                                        onPressed: () {
+                                          pushSolutionsPage(context, "What is happening globally?", "Add");
+                                        },
+                                      ),
+                                      FlatButton(
+                                        color: Uidata.btnColor,
+                                        child: Text("View", style: TextStyle(color: Colors.white)),
+                                        onPressed: () {
+                                          pushSolutionsPage(context, "What is happening globally?", "View");
+                                        },
+                                      ),
+                                  ],)
+                                ],
+                              ),
                             ),
                             Divider(
                               color:  Colors.black,
                             ),
-                            ListTile(
-                              leading: Icon(Icons.info),
-                              title: Text('What is happening globally?'),
-                              subtitle: Text('guiding questions'),
-                              onTap: () {
-                                pushSolutionsPage(context, 'What is happening globally?');
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => SolutionNote(NoteMode.Adding, null, "What is happening globally?")));
-                              },
-                            ),Divider(
-                              color:  Colors.black,
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.info),
-                              title: Text('What is working, what is not?'),
-                              subtitle: Text('guiding questions'),
-                              onTap: (){
-                                pushSolutionsPage(context, 'What is working, what is not?');
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => SolutionNote(NoteMode.Adding, null, "What is working, what is not?")));
-        
-                              },
+                            Card(
+                              child: Column(
+                              children: <Widget>[
+                                ListTile(
+                                  leading: Icon(Icons.info),
+                                  title: Text('What is working, what is not?'),
+                                  subtitle: Text('guiding questions'),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    FlatButton(
+                                      color: Uidata.btnColor,
+                                      child: Text("Add", style: TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        pushSolutionsPage(context, "What is working, what is not?", "Add");
+                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Uidata.btnColor,
+                                      child: Text("View", style: TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        pushSolutionsPage(context, "What is working, what is not?", "View");
+                                      },
+                                    ),
+                                ],)
+                              ],
+                              )
                             ),
                             Divider(
                               color:  Colors.black,
                             ),
-                            ListTile(
-                              leading: Icon(Icons.info),
-                              title: Text('Where is the focus and the future?'),
-                              subtitle: Text('guiding questions'),
-                              onTap: (){
-                                pushSolutionsPage(context, 'Where is the focus and the future?');
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => SolutionNote(NoteMode.Adding, null, "Where is the focus and the future?")));
-                              },
+                            Card(
+                              child: Column(
+                              children: <Widget>[
+                                ListTile(
+                                  leading: Icon(Icons.info),
+                                  title: Text('Where is the focus and the future?'),
+                                  subtitle: Text('guiding questions'),
+                                  
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    FlatButton(
+                                      color: Uidata.btnColor,
+                                      child: Text("Add", style: TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        pushSolutionsPage(context, "'Where is the focus and the future?", "Add");
+                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Uidata.btnColor,
+                                      child: Text("View", style: TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        pushSolutionsPage(context, "'Where is the focus and the future?", "View");
+                                      },
+                                    ),
+                                ],)
+                              ],
+                              )
                             ),
                             Divider(
                               color:  Colors.black,
@@ -440,9 +731,13 @@ class Solutions extends StatelessWidget {
 
                   
 
-                  void pushSolutionsPage(BuildContext context, String question) {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewIGC("Solutions", question)));
-                  }
+    void pushSolutionsPage(BuildContext context, String question, String type) {
+      if(type == "Add"){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => returnPageFunction("Solutions", question)));
+      }else if(type == "View"){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ViewIGC("Solutions", question)));
+      }
+    }
 }
 
 

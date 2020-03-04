@@ -56,6 +56,8 @@ class _ViewIGCState extends State<ViewIGC> {
 	
   }
 
+  bool loaded = false;
+
 
   @override
   void initState(){
@@ -67,29 +69,22 @@ class _ViewIGCState extends State<ViewIGC> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.postName),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            color: Colors.white,
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => returnPageFunction(widget.postName, widget.question)));
-            },
-          )
-        ],
+        title: Text(widget.postName),       
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => IGCTableFinal()));
-        },
-        backgroundColor: Uidata.btnColor,
-        child: Icon(Icons.arrow_forward)
-      ),
-      body: FutureBuilder(
-       future: returnFunction(widget.postName),
+      // body: futureTest(),
+      body: loaded == false? Center(child: CircularProgressIndicator(),)
+      : futureTest(),
+    );
+  }
+
+
+  Widget futureTest() {
+    return FutureBuilder(
+      future: returnFunction(widget.postName),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final notes = snapshot.data;
+            loaded = true;
             return ListView.builder(
               itemBuilder: (context, index) {
                 return GestureDetector(
@@ -117,10 +112,9 @@ class _ViewIGCState extends State<ViewIGC> {
               itemCount: notes == null? 0 : notes.length,
             );
           }
-          return Center(child: CircularProgressIndicator());
+          return Center(child: Container(child:LinearProgressIndicator()));
         },
-      ),
-    );
+      );
   }
 
   

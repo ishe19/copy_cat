@@ -47,28 +47,28 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
           child: Icon(Icons.note_add),
           label: "New Canvas",
           onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => newModel.NewModel(null , newModel.NoteMode.Adding)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => newModel.NewModel(null , newModel.NoteMode.Adding)));
           }
         ),
         SpeedDialChild(
           child: Icon(Icons.note_add),
           label: "New SWOT",
           onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => swotDetail.SwotDetails(swotDetail.NoteMode.Adding, null)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => swotDetail.SwotDetails(swotDetail.NoteMode.Adding, null)));
           },
         ),
           SpeedDialChild(
           child: Icon(Icons.note_add),
           label: "IGC",
           onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Pages()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Pages()));
           },
         ),
         SpeedDialChild(
           child: Icon(Icons.note_add),
           label: "Value proposition",
           onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ValueDashboard()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ValueDashboard()));
           },
         ),
         ]
