@@ -118,10 +118,10 @@ class _TableWidgetState extends State<TableWidget>{
 
               TableRow(
                 children: [
-                   Container(
-                     height: 150,
-                     color: Colors.white,
-                     child: FutureBuilder(
+                  Container(
+                    height: 150,
+                    color: Colors.white,
+                    child: FutureBuilder(
                                     future: StrengthProvider.getStrengthList(widget.swotID.toString()),
                                       builder: (context, snapshot) {
                                         if (snapshot.connectionState == ConnectionState.done) {

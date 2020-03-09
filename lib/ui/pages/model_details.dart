@@ -8,6 +8,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:copy_cat/models/db2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'igc.dart';
+import 'igc_table.dart';
 
 
   
@@ -151,17 +152,16 @@ class _PagesState extends State<Pages> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => IGCTableFinal()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => IGCTable()));
+        },
+        child: Icon(Icons.arrow_forward)
+      ),
       appBar: AppBar(
         title: Text("IGC"),
         centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(FontAwesomeIcons.arrowRight),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> IGCTableFinal()));
-              }
-          )],
         bottom: 
         TabBar(
           controller: inAppTabController,

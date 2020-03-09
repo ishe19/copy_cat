@@ -37,7 +37,7 @@ class _ViewPostState extends State<ViewPost> {
         child: Icon(Icons.add),
       ),
       body: FutureBuilder(
-       future: DBManagerViews.getLists(widget.postName, widget.modelId),
+      future: DBManagerViews.getLists(widget.postName, widget.modelId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final notes = snapshot.data;

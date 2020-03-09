@@ -8,6 +8,8 @@ import 'package:copy_cat/providers/opps_providers.dart';
 import 'package:copy_cat/models/db2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'igc_table.dart';
+
 enum NoteMode { 
   Editing,
   Adding
@@ -35,12 +37,6 @@ class Challenges extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => IGCTableFinal()));
-        },
-        child: Icon(Icons.arrow_forward)
-      ),
       body: SafeArea( 
         child: ListView(
           children: <Widget>[
@@ -289,12 +285,6 @@ class ImpactGap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => IGCTableFinal()));
-        },
-        child: Icon(Icons.arrow_forward)
-      ),
       body: SafeArea(
         child: ListView(
           children: <Widget>[
@@ -374,8 +364,7 @@ class ImpactGap extends StatelessWidget {
                       DialogButton(
                       child: Text('Got it'),
                       onPressed: (){
-                                          Navigator.pop(context);
-
+                        Navigator.pop(context);
                       },)
                     ]).show();
           },
@@ -543,12 +532,6 @@ class Solutions extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => IGCTableFinal()));
-        },
-        child: Icon(Icons.arrow_forward)
-      ),
       body:  ListView(
           children: <Widget>[
             Card(

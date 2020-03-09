@@ -28,7 +28,17 @@ class ValueDashboardState extends State<ValueDashboard> {
      // // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
         title: Text("Value Proposition canvas"),
-        
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+              Colors.black,
+              Colors.blue
+            ])
+          ),
+        ),  
       ),
        floatingActionButton: FloatingActionButton(
         backgroundColor: Uidata.btnColor,
@@ -165,9 +175,26 @@ class CustomerElementsState extends State<CustomerElements> with SingleTickerPro
 //      drawer: SideDrawer(),
       appBar: AppBar(
         title: Text("Customer Details"),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+              Colors.black,
+              Colors.blue
+            ])
+          ),
+        ),
         actions: <Widget>[
         IconButton( icon: Icon(Icons.help),
           onPressed: (){
+                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Questions()));
+
+          }),
+          IconButton( icon: Icon(Icons.input),
+          onPressed: (){
+                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Questions()));
 
           }),
         ],
@@ -177,24 +204,40 @@ class CustomerElementsState extends State<CustomerElements> with SingleTickerPro
           tabs: <Widget>[
             Tab(
 //              icon: Icon(Icons.pages),
-              child: Text("Customer Category"),
+              child: Text("Customer "),
             ),
             Tab(
 //              icon: Icon(Icons.business),
-              child: Text("Product Category"),
+              child: Text("Product "),
             ),
           ],
         ),
       ),
-      body: TabBarView(
+      body: Stack(fit: StackFit.expand,
+      children: <Widget>[
+        Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin:Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors:[
+              Colors.blue,
+              Colors.black
+            ]
+          )
+        ),
+        ),
+      TabBarView(
+        
         controller: inAppTabController,
         children: <Widget>[
           CustomerCategory(),
           ProductCategory(),
         ],
       ),
-
-    );
+      ]
+      )
+      );
   }
 }
 
@@ -202,22 +245,75 @@ class CustomerCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: Stack(fit: StackFit.expand,
+      children: <Widget>[
+        Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin:Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors:[
+              Colors.blue,
+              Colors.black
+            ]
+          )
+        ),
+      ),SafeArea(
         child: ListView(
           children: <Widget>[
             Card(
-            // height: 200,
-            // width: 250.0,
-            color: Colors.blue.shade700,
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width / 1.5,
-              child: Text("What is happening, what is the impact of the challenge, and what is holding the challenge in place", style: TextStyle(color: Colors.white),),),
-          ),
-            ListTile(
-              leading:  IconButton(
-          icon: Icon(Icons.info),
-          onPressed: (){return Alert(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                    Text('What is the customer category',
+                                    style: TextStyle(
+                                      fontSize: 15.0),
+                                    ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
+              ),
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                  Navigator.pop(context);
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.info),
+                                      onPressed: (){
+                                        return Alert(
               context: context,
               title: 'B1',
               desc:'How do those impacted by the challenge describe the challenge? How do they describe the effects?How is this challenge related to other challenges?',
@@ -229,142 +325,322 @@ class CustomerCategory extends StatelessWidget {
 
                 },)
               ]).show();
-              },
+        },
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                    ),
+                    Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                    Text('What are the current negative/undesirable Experiences',
+                                    style: TextStyle(
+                                      fontSize: 14.0
+                                      ),)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
               ),
-              title: Text('Current Negative/ undesirable Experiences'),
-              subtitle: Text('guiding questions'),
-                            onTap: (){
-                            //  pushChallengePage(context, "How do you describe the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
-                          ),
-                          Divider(
-                            color:  Colors.black,
-                          ),
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'B2',
-                            desc:'What are the numbers? Who or what is impacted(where, how many, in what way?)What does the research say?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.info),
+                                      onPressed: (){
+                                      // DBManagerSwot.deleteModel(notes[index]['id']);
+                                    },
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            title: Text('Unmet needs'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                            //  pushChallengePage(context, "What is the impact of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
-                          ),Divider(
-                            color:  Colors.black,
                           ),
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'B3',
-                            desc:'What is causing the challenge to persist? Who stands to benefit from the challenge continuing to persist?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
+                        )
+                    ),
+                    Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                    Text('Unmet needs')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
+              ),
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.info),
+                                      onPressed: (){
+                                      // DBManagerSwot.deleteModel(notes[index]['id']);
+                                    },
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            title: Text('Concerns about the current solution?'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                             // pushChallengePage(context, "What is the cause of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
                           ),
-                          Divider(
-                            color:  Colors.black,
-                          ),
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'E1',
-                            desc:'How has the challenge changed over time? What is the projected scope of the challenge in the future?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
+                        )
+                    ),
+                    Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                    Text('What are the concerns about the current solutions?')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
+              ),
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.info),
+                                      onPressed: (){
+                                      // DBManagerSwot.deleteModel(notes[index]['id']);
+                                    },
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            title: Text('Competing products'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                             // pushChallengePage(context, "What is the history and future of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
                           ),
-                          
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'F1',
-                            desc:'How has the challenge changed over time? What is the projected scope of the challenge in the future?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
+                        )
+                    ),
+                    Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                    Text('What are the Competing products?')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
+              ),
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                  IconButton(
+                                    icon: Icon(Icons.info),
+                                    onPressed: (){
+                                    // DBManagerSwot.deleteModel(notes[index]['id']);
+                                  },
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            title: Text('Competing product performance'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                             // pushChallengePage(context, "What is the history and future of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
                           ),
-                          Card(
-                          // height: 200,
-                          // width: 250.0,
-                          color: Colors.blue,
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            child: Text("Hints: Tap on the information icon for a guiding question. ", style: TextStyle(color: Colors.white),),),
-                        ),
-                        Card(
-                          // height: 200,
-                          // width: 250.0,
-                          color: Colors.blue.shade700,
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            child: Text("Hints: tap on the tile to add or edit your answer", style: TextStyle(color: Colors.white),),),
-                        ),
+                        )
+                    ),
+                    Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                    Text('How does the competing product performance compare?')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
+              ),
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.info),
+                                      onPressed: (){
+                                  },
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                    ),  
                         ],
-                       ),
-                     ),
-                    );
+                      ),
+                    ),
+      ]),
+    );
                 }
             }
 
@@ -374,22 +650,77 @@ class ProductCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+       body: Stack(fit: StackFit.expand,
+      children: <Widget>[
+        Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin:Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors:[
+              Colors.blue,
+              Colors.black
+            ]
+          )
+        ),
+      ),SafeArea(
         child: ListView(
           children: <Widget>[
             Card(
-            // height: 200,
-            // width: 250.0,
-            color: Colors.blue.shade700,
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width / 1.5,
-              child: Text("What is happening, what is the impact of the challenge, and what is holding the challenge in place", style: TextStyle(color: Colors.white),),),
-          ),
-            ListTile(
-              leading:  IconButton(
-          icon: Icon(Icons.info),
-          onPressed: (){return Alert(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                     Text('Define the product/service',
+                                     style: TextStyle(
+                                       fontSize: 15.0),
+                                     ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+                                          TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
+              ),
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show(); 
+              },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.info),
+                                      onPressed: (){
+                                        return Alert(
               context: context,
               title: 'B1',
               desc:'How do those impacted by the challenge describe the challenge? How do they describe the effects?How is this challenge related to other challenges?',
@@ -401,146 +732,448 @@ class ProductCategory extends StatelessWidget {
 
                 },)
               ]).show();
-              },
+            },
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                    ),
+                    Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                  Text('Solutions to current negative/undesirable Experiences',
+                                  style: TextStyle(
+                                    fontSize: 14.0
+                                    ),)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
               ),
-              title: Text('Current Negative/ undesirable Experiences'),
-              subtitle: Text('guiding questions'),
-                            onTap: (){
-                            //  pushChallengePage(context, "How do you describe the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
-                          ),
-                          Divider(
-                            color:  Colors.black,
-                          ),
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'B2',
-                            desc:'What are the numbers? Who or what is impacted(where, how many, in what way?)What does the research say?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                     IconButton(
+                                       icon: Icon(Icons.info),
+                                       onPressed: (){
+                                        // DBManagerSwot.deleteModel(notes[index]['id']);
+                                     },
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            title: Text('Unmet needs'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                            //  pushChallengePage(context, "What is the impact of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
-                          ),Divider(
-                            color:  Colors.black,
                           ),
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'B3',
-                            desc:'What is causing the challenge to persist? Who stands to benefit from the challenge continuing to persist?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
+                        )
+                    ),
+                    Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                     Text('Solutions to the unmet needs')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
+              ),
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.info),
+                                      onPressed: (){
+                                  },
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            title: Text('Concerns about the current solution?'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                             // pushChallengePage(context, "What is the cause of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
                           ),
-                          Divider(
-                            color:  Colors.black,
-                          ),
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'E1',
-                            desc:'How has the challenge changed over time? What is the projected scope of the challenge in the future?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
+                        )
+                    ),
+                    Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                    Text('What is the response to concerns about current solutions?')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
+              ),
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                     IconButton(
+                                       icon: Icon(Icons.info),
+                                       onPressed: (){
+                                        // DBManagerSwot.deleteModel(notes[index]['id']);
+                                     },
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            title: Text('Competing products'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                             // pushChallengePage(context, "What is the history and future of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
                           ),
-                          Divider(
-                            color:  Colors.black,
-                          ),
-                          Divider(
-                            color:  Colors.black,
-                          ),
-                          ListTile(
-                            leading: IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: (){return Alert(
-                            context: context,
-                            title: 'F1',
-                            desc:'How has the challenge changed over time? What is the projected scope of the challenge in the future?',
-                            buttons: [
-                              DialogButton(
-                              child: Text('Got it'),
-                              onPressed: (){
-                                                  Navigator.pop(context);
-              
-                              },)
-                            ]).show();
-                            },
+                        )
+                    ),
+                    Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                     Text('What differentiates your product/service?')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
+              ),
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                     IconButton(
+                                       icon: Icon(Icons.info),
+                                       onPressed: (){
+                                        // DBManagerSwot.deleteModel(notes[index]['id']);
+                                     },
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            title: Text('Competing product performance'),
-                            subtitle: Text('guiding questions'),
-                            onTap: (){
-                             // pushChallengePage(context, "What is the history and future of the challenge?");
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=> ChallengeNote(NoteMode.Adding, null, )));
-                            },
                           ),
-                          Card(
-                          // height: 200,
-                          // width: 250.0,
-                          color: Colors.blue,
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            child: Text("Hints: Tap on the information icon for a guiding question. ", style: TextStyle(color: Colors.white),),),
-                        ),
-                        Card(
-                          // height: 200,
-                          // width: 250.0,
-                          color: Colors.blue.shade700,
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            child: Text("Hints: tap on the tile to add or edit your answer", style: TextStyle(color: Colors.white),),),
-                        ),
+                        )
+                    ),
+                    Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                     Text('What is your evidence of the product/service performance?')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                     // SwotDescription(notes[index]['SwotDescription']),
+                                      // Text(description)
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FlatButton(
+                                        //                splashColor: Colors.grey,
+                                        color: Colors.white,
+                                        child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
+                                        onPressed: (){
+TextEditingController customController;
+ return Alert(
+              context: context,
+              title: 'Answer',
+              content: TextField(
+                controller: customController,
+              ),
+              buttons: [
+                DialogButton(
+                child: Text('Done'),
+                onPressed: (){
+                                    Navigator.pop(context);
+
+                },)
+              ]).show();                                      },
+                                    ),
+                                    FlatButton(
+                                      color: Colors.white,
+                                      child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
+                                      onPressed: (){
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                      },
+                                    ),
+                                     IconButton(
+                                       icon: Icon(Icons.info),
+                                       onPressed: (){
+                                        // DBManagerSwot.deleteModel(notes[index]['id']);
+                                     },
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                    ),  
                         ],
                        ),
                      ),
-                    );
+      ]),
+    );
                 }
             }
+
+
+class Questions extends StatelessWidget{
+  @override 
+
+  Widget build(BuildContext context){
+  return Scaffold(
+    appBar: AppBar(
+        title: Text("Value Proposition Key Questions"),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+              Colors.black,
+              Colors.blue
+            ])
+          ),
+        ),
+        
+      ),
+       
+      body: Stack(fit: StackFit.expand,
+      children: <Widget>[
+        Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin:Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors:[
+              Colors.blue,
+              Colors.black
+            ]
+          )
+        ),
+        ),
+        SafeArea(
+        child: ListView(
+          children: <Widget>[           
+            ListTile(
+              title: Text('A: Who are the customers/beneficiaries of your intervention?',
+              style: TextStyle(
+                color: Colors.white
+              ),),
+              subtitle: Text(''),
+                            onTap: (){   
+                            },
+                          ),
+                          Divider(
+                            color:  Colors.white,
+                          ),
+            ListTile(
+              title: Text("B: What is each customer's current lived reality?",
+              style: TextStyle(
+                color: Colors.white
+              ),),
+              subtitle: Text('B1:Negative experiences,   B2:unmet needs,    B3: concerns about current solutions',
+              style: TextStyle(
+                color: Colors.white
+              ),),
+                            onTap: (){   
+                            },
+                          ),
+                          Divider(
+                            color:  Colors.white,
+                          ),
+            ListTile(
+              title: Text('C: What are you offering(product/service)?',
+              style: TextStyle(
+                color: Colors.white
+              ),),
+              subtitle: Text(''),
+                            onTap: (){   
+                            },
+                          ),
+                          Divider(
+                            color:  Colors.white,
+                          ),
+          ListTile(
+              title: Text("D: How does your offering respond to the customer's current lived realities?",
+              style: TextStyle(
+                color: Colors.white
+              ),),
+              subtitle: Text(''),
+                            onTap: (){   
+                            },
+                          ),
+                          Divider(
+                            color:  Colors.white,
+                          ),
+            ListTile(
+              title: Text('E: What sets you or your product/ service apart from alternative solution providers?',
+              style: TextStyle(
+                color: Colors.white
+              ),),
+              subtitle: Text(''),
+                            onTap: (){   
+                            },
+                          ),
+                          Divider(
+                            color:  Colors.white,
+                          ),
+          ListTile(
+              title: Text('F: What proof do you have that your product/ service does  what you say it does?',
+              style: TextStyle(
+                color: Colors.white
+              ),),
+              subtitle: Text(''),
+                            onTap: (){   
+                            },
+                          ),
+                          Divider(
+                            color:  Colors.white,
+                          ),
+          ]
+
+  ),
+  ),
+      ],
+      ),
+      );
+  }
+}
+
+
+ 
