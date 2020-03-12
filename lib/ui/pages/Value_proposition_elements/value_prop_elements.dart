@@ -27,8 +27,8 @@ class CustomerDetails extends StatefulWidget {
 
 class CustomerDetailsState extends State<CustomerDetails> {
 
-  String customerTitle;
-  TextEditingController _customerTitleController = new TextEditingController();
+  String subjectTitle;
+  TextEditingController _subjectTitleController = new TextEditingController();
 
 
 
@@ -38,10 +38,10 @@ class CustomerDetailsState extends State<CustomerDetails> {
   void initState(){
     super.initState();
     
-    _customerTitleController.addListener(
+    _subjectTitleController.addListener(
       (){
         setState(() {
-          customerTitle = _customerTitleController.text;
+          subjectTitle = _subjectTitleController.text;
         });
       }
     );
@@ -78,18 +78,18 @@ class CustomerDetailsState extends State<CustomerDetails> {
             onPressed: () {
               if(validateForm()) {
                       if (widget.noteMode == NoteMode.Adding) {
-                        DBManagerCustomer.insertCustomer({
-                          'customerTitle': customerTitle,
+                        DBManagerCustomer.insertSubject({
+                          'SubjectTitle': subjectTitle,
                         
                         });
                       } else if (widget?.noteMode == NoteMode.Editing) {
-                        DBManagerCustomer.updateCustomer({
+                        DBManagerCustomer.updateSubject({
                           'id': widget.note['id'],
-                          'customerTitle': _customerTitleController.text,
+                          'SubjectTitle': _subjectTitleController.text,
                           
                         });
                     }
-                    print("$customerTitle");
+                    print("$subjectTitle");
                   Navigator.pop(context);
                   }
             },
@@ -126,8 +126,8 @@ class CustomerDetailsState extends State<CustomerDetails> {
                         onTap: (){
 
                         },
-                        controller: _customerTitleController,
-                        onSaved: (value) => customerTitle = value,
+                        controller: _subjectTitleController,
+                        onSaved: (value) => subjectTitle = value,
                         validator: (val) =>  val.length == 0? "Please enter title" : null,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),

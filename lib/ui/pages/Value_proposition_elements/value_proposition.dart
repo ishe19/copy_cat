@@ -1,12 +1,17 @@
 import 'package:copy_cat/models/db_manager.dart';
-import 'package:copy_cat/ui/pages/Value_proposition_elements/value_prop_elements.dart' as customer;
+import 'package:copy_cat/ui/pages/Value_proposition_elements/answers1_list.dart';
+import 'package:copy_cat/ui/pages/Value_proposition_elements/value_prop_elements.dart' as subject;
+import 'package:copy_cat/ui/pages/Value_proposition_elements/values_db.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 
-
+enum NoteMode { 
+  Editing,
+  Adding
+}
 
 
 class ValueDashboard extends StatefulWidget{
@@ -43,12 +48,12 @@ class ValueDashboardState extends State<ValueDashboard> {
        floatingActionButton: FloatingActionButton(
         backgroundColor: Uidata.btnColor,
         onPressed: (){
-           Navigator.push(context, MaterialPageRoute(builder: (context) => customer.CustomerDetails(customer.NoteMode.Adding, null)));
+           Navigator.push(context, MaterialPageRoute(builder: (context) => subject.CustomerDetails(subject.NoteMode.Adding, null)));
         },
         child: Icon(Icons.add),
       ),
       body: FutureBuilder(
-       future: DBManagerCustomer.getCustomerList(),
+       future: DBManagerCustomer.getSubjectList(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final notes = snapshot.data;
@@ -71,7 +76,7 @@ class ValueDashboardState extends State<ValueDashboard> {
                                     children: <Widget>[
                                      Padding(
                                        padding: const EdgeInsets.only(top:5.0, left: 15.0),
-                                       child: CustomerTitle(notes[index]['customerTitle']),
+                                       child: CustomerTitle(notes[index]['SubjectTitle']),
                                      ),
                                     ],
                                   ),
@@ -96,7 +101,7 @@ class ValueDashboardState extends State<ValueDashboard> {
                                     IconButton(
                                        icon: Icon(Icons.delete),
                                        onPressed: (){
-                                         DBManagerCustomer.deleteCustomer(notes[index]['id']);
+                                         DBManagerCustomer.deleteSubject(notes[index]['id']);
                                      },
                                     ),
                                   ],
@@ -189,12 +194,12 @@ class CustomerElementsState extends State<CustomerElements> with SingleTickerPro
         actions: <Widget>[
         IconButton( icon: Icon(Icons.help),
           onPressed: (){
-                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Questions()));
+            //                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Questions()));
 
           }),
           IconButton( icon: Icon(Icons.input),
           onPressed: (){
-                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Questions()));
+           //                                          Navigator.push(context, MaterialPageRoute(builder: (context) => Questions()));
 
           }),
         ],
@@ -299,6 +304,11 @@ TextEditingController customController;
                 DialogButton(
                 child: Text('Done'),
                 onPressed: (){
+                final answer = customController.text;
+                  DBManagerAnswer1.insertAnswer1({
+                      'answer': answer
+                      }
+                    );
                   Navigator.pop(context);
                 },)
               ]).show();                                      },
@@ -307,7 +317,7 @@ TextEditingController customController;
                                       color: Colors.white,
                                       child: Text("View Exising answers", style: TextStyle(color: Uidata.primaryColor),),
                                       onPressed: (){
-                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SwotDetails(NoteMode.Editing,notes)));
+                                       Navigator.push(context, MaterialPageRoute(builder: (context) => Answer1List()));
                                       },
                                     ),
                                     IconButton(
@@ -647,6 +657,8 @@ TextEditingController customController;
 
 
 class ProductCategory extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1010,7 +1022,8 @@ TextEditingController customController;
 TextEditingController customController;
  return Alert(
               context: context,
-              title: 'Answer',
+              title:  ('Add new User'),
+              desc: 'Answer:',
               content: TextField(
                 controller: customController,
               ),
@@ -1018,8 +1031,8 @@ TextEditingController customController;
                 DialogButton(
                 child: Text('Done'),
                 onPressed: (){
-                                    Navigator.pop(context);
-
+                 // addRecord(isEdit);
+                Navigator.of(context).pop();
                 },)
               ]).show();                                      },
                                     ),
@@ -1053,6 +1066,7 @@ TextEditingController customController;
 
 
 class Questions extends StatelessWidget{
+
   @override 
 
   Widget build(BuildContext context){
@@ -1173,7 +1187,121 @@ class Questions extends StatelessWidget{
       ),
       );
   }
+  }
+
+
+  class Answers1 extends StatefulWidget {
+
+
+  final NoteMode noteMode;
+  final Map<String, dynamic> note;
+
+
+  Answers1(this.noteMode, this.note);
+
+  @override
+  Answers1State createState() {
+    return Answers1State();
+  }
+}
+
+class Answers1State extends State<Answers1> {
+
+
+  final TextEditingController _textController = TextEditingController();
+  
+
+  @override
+  void didChangeDependencies() {
+    if (widget.noteMode == NoteMode.Editing) {
+      _textController.text = widget.note['text'];
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget.noteMode == NoteMode.Adding ? 'Add Response' : 'Edit Response'
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(40.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              controller: _textController,
+              decoration: InputDecoration(
+                hintText: 'Your answer'
+              ),
+            ),
+            Container(height: 16.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                _NoteButton('Save', Colors.blue, () {
+                  final answer = _textController.text;
+
+                  if (widget?.noteMode == NoteMode.Adding) {
+                    DBManagerAnswer1.insertAnswer1({
+
+                      'answer': answer
+                    }
+                    );
+                  } else if (widget?.noteMode == NoteMode.Editing) {
+                  DBManagerAnswer1.updateAnswer1({
+                    'id': widget.note['id'],
+                      'answer': answer
+                    }
+                    );
+                  }
+                  Navigator.pop(context);
+                }),
+                Container(height: 16.0,),
+                _NoteButton('Discard', Colors.grey, () {
+                  Navigator.pop(context);
+                }),
+                widget.noteMode == NoteMode.Editing ?
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: _NoteButton('Delete', Colors.red, () async {
+                      await DBManagerAnswer1.deleteAnswer1(widget.note['id']);
+                      Navigator.pop(context);
+                    }),
+                  )
+                : Container()
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 
- 
+class _NoteButton extends StatelessWidget {
+
+  final String _text;
+  final Color _color;
+  final Function _onPressed;
+
+  _NoteButton(this._text, this._color, this._onPressed);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: _onPressed,
+      child: Text(
+        _text,
+        style: TextStyle(color: Colors.white),
+      ),
+      height: 40,
+      minWidth: 100,
+      color: _color,
+    );
+  }
+}

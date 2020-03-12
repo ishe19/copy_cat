@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:copy_cat/ui/utils/uidata.dart';
 import 'package:copy_cat/models/db_manager.dart';
 import 'package:copy_cat/models/db2.dart';
-import 'package:copy_cat/ui/pages/swot_elements/final_table.dart';
 import 'package:flutter/services.dart';
 
 import 'igc.dart' as igc;

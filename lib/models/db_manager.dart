@@ -614,39 +614,39 @@ class DBManagerCustomer{
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute('''
-          create table Customer (
+          create table Subject (
             id integer primary key autoincrement,
-            customerTitle text not null
+            SubjectTitle text not null
 
             
           );''');
       });
       }
 
-       static Future insertCustomer(Map<String, dynamic> note) async {
-    await db.insert('Customer', note);
+       static Future insertSubject(Map<String, dynamic> note) async {
+    await db.insert('Subject', note);
   }
 
-  static Future deleteCustomer(int id) async {
+  static Future deleteSubject(int id) async {
     await db.delete(
-      'Customer',
+      'Subject',
       where: 'id = ?',
       whereArgs: [id]);
   }
 
-  static Future updateCustomer(Map<String, dynamic> note) async {
+  static Future updateSubject(Map<String, dynamic> note) async {
     await db.update(
-        'Customer',
+        'Subject',
         note,
         where: 'id = ?',
         whereArgs: [note['id']]);
   }
 
-   static Future<List<Map<String, dynamic>>> getCustomerList() async {
+   static Future<List<Map<String, dynamic>>> getSubjectList() async {
     if (db == null) {
       await openDB();
     }else{
-      return await db.query('Customer');
+      return await db.query('Subject');
     }
 
    }
