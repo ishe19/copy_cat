@@ -7,7 +7,7 @@ class DBManagerAnswer1{
   static Database db;
   static Future openDB() async {
     db = await openDatabase(
-      join(await getDatabasesPath(), 'answer1.db'),
+      join(await getDatabasesPath(), 'answers1.db'),
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute('''
@@ -18,7 +18,7 @@ class DBManagerAnswer1{
       });
       }
 
-       static Future insertAnswer1(Map<String, dynamic> note) async {
+  static Future insertAnswer1(Map<String, dynamic> note) async {
     await db.insert('Answer1', note);
   }
 

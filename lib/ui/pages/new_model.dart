@@ -1,4 +1,4 @@
- import 'package:copy_cat/ui/dashboard.dart';
+import 'package:copy_cat/ui/dashboard.dart';
 import 'package:copy_cat/ui/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';

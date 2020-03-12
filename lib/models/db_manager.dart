@@ -623,7 +623,7 @@ class DBManagerCustomer{
       });
       }
 
-       static Future insertSubject(Map<String, dynamic> note) async {
+  static Future insertSubject(Map<String, dynamic> note) async {
     await db.insert('Subject', note);
   }
 

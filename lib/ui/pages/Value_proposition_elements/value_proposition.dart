@@ -246,7 +246,30 @@ class CustomerElementsState extends State<CustomerElements> with SingleTickerPro
   }
 }
 
-class CustomerCategory extends StatelessWidget {
+class CustomerCategory extends StatefulWidget {
+  @override
+  _CustomerCategoryState createState() => _CustomerCategoryState();
+}
+
+class _CustomerCategoryState extends State<CustomerCategory> {
+
+  TextEditingController customController = new TextEditingController();
+  String testAnswer;
+
+  @override
+  void initState(){
+    super.initState();
+
+    customController.addListener(
+      (){
+        setState(() {
+          testAnswer = customController.text;
+        });
+      }
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -293,7 +316,6 @@ class CustomerCategory extends StatelessWidget {
                                         color: Colors.white,
                                         child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
                                         onPressed: (){
-TextEditingController customController;
  return Alert(
               context: context,
               title: 'Answer',
@@ -305,11 +327,12 @@ TextEditingController customController;
                 child: Text('Done'),
                 onPressed: (){
                 final answer = customController.text;
+                print(answer);
                   DBManagerAnswer1.insertAnswer1({
-                      'answer': answer
+                      'answer': answer.toString()
                       }
                     );
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                 },)
               ]).show();                                      },
                                     ),
@@ -371,7 +394,7 @@ TextEditingController customController;
                                         color: Colors.white,
                                         child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
                                         onPressed: (){
-TextEditingController customController;
+
  return Alert(
               context: context,
               title: 'Answer',
@@ -431,7 +454,6 @@ TextEditingController customController;
                                         color: Colors.white,
                                         child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
                                         onPressed: (){
-TextEditingController customController;
  return Alert(
               context: context,
               title: 'Answer',
@@ -491,7 +513,6 @@ TextEditingController customController;
                                         color: Colors.white,
                                         child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
                                         onPressed: (){
-TextEditingController customController;
 return Alert(
               context: context,
               title: 'Answer',
@@ -551,7 +572,6 @@ return Alert(
                                         color: Colors.white,
                                         child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
                                         onPressed: (){
-TextEditingController customController;
  return Alert(
               context: context,
               title: 'Answer',
@@ -611,7 +631,6 @@ TextEditingController customController;
                                         color: Colors.white,
                                         child: Text("Add New Answer", style: TextStyle(color: Uidata.primaryColor),),
                                         onPressed: (){
-TextEditingController customController;
  return Alert(
               context: context,
               title: 'Answer',
@@ -651,8 +670,16 @@ TextEditingController customController;
                     ),
       ]),
     );
-                }
-            }
+  }
+}
+
+// class CustomerCategory extends StatelessWidget  {
+
+//   TextEditingController customController = new TextEditingController();
+
+  
+//                 }
+//             }
 
 
 

@@ -15,14 +15,12 @@ class DBManagerGuide {
             id integer primary key autoincrement,
             question text not null,
             title text not null
-           
           );''');
           await db.execute('''
           create table impacts(
             id integer primary key autoincrement,
             question text not null,
             title text not null
-   
           );''');
           await db.execute('''
           create table solutions(
@@ -35,7 +33,7 @@ class DBManagerGuide {
 
   // CHALLENGE METHODS
 
-   static Future insertChallenge(Map<String, dynamic> note) async {
+  static Future insertChallenge(Map<String, dynamic> note) async {
     await db.insert('challenges', note);
   }
 
