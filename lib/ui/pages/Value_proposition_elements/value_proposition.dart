@@ -1,11 +1,11 @@
 import 'package:copy_cat/models/db_manager.dart';
 import 'package:copy_cat/ui/pages/Value_proposition_elements/answers1_list.dart';
 import 'package:copy_cat/ui/pages/Value_proposition_elements/value_prop_elements.dart' as subject;
-import 'package:copy_cat/ui/pages/Value_proposition_elements/values_db.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:copy_cat/models/db2.dart';
 
 
 enum NoteMode { 
@@ -326,13 +326,15 @@ class _CustomerCategoryState extends State<CustomerCategory> {
                 DialogButton(
                 child: Text('Done'),
                 onPressed: (){
-                final answer = customController.text;
-                print(answer);
-                  DBManagerAnswer1.insertAnswer1({
-                      'answer': answer.toString()
-                      }
-                    );
-                  // Navigator.pop(context);
+                  Navigator.pop(context);
+                  final answer = customController.text;
+                  print(answer);
+                    DBManagerCustAnswers.insertAnswer1({
+                        'answer': answer.toString()
+                        }
+                      );
+                      customController.clear();
+                  
                 },)
               ]).show();                                      },
                                     ),
@@ -1273,13 +1275,13 @@ class Answers1State extends State<Answers1> {
                   final answer = _textController.text;
 
                   if (widget?.noteMode == NoteMode.Adding) {
-                    DBManagerAnswer1.insertAnswer1({
+                    DBManagerCustAnswers.insertAnswer1({
 
                       'answer': answer
                     }
                     );
                   } else if (widget?.noteMode == NoteMode.Editing) {
-                  DBManagerAnswer1.updateAnswer1({
+                  DBManagerCustAnswers.updateAnswer1({
                     'id': widget.note['id'],
                       'answer': answer
                     }
@@ -1295,7 +1297,7 @@ class Answers1State extends State<Answers1> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: _NoteButton('Delete', Colors.red, () async {
-                      await DBManagerAnswer1.deleteAnswer1(widget.note['id']);
+                      await DBManagerCustAnswers.deleteAnswer1(widget.note['id']);
                       Navigator.pop(context);
                     }),
                   )

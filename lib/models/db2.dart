@@ -139,3 +139,50 @@ class DBManagerGuide {
 
 
 }
+
+class DBManagerCustAnswers {
+  static Database db; 
+
+  static Future openDB() async {
+    db = await openDatabase(
+      join(await getDatabasesPath(), 'testAnswers.db'),
+      version: 1,
+      onCreate: (Database db, int version) async {
+        await db.execute('''
+          create table answers_table(
+            id integer primary key autoincrement,
+            answer text not null
+          );''');
+          
+      });
+  }
+
+  static Future insertAnswer1(Map<String, dynamic> note) async {
+    await db.insert('answers_table', note);
+  }
+
+  static Future deleteAnswer1(int id) async {
+    await db.delete(
+      'answers_table',
+      where: 'id = ?',
+      whereArgs: [id]);
+  }
+
+  static Future updateAnswer1(Map<String, dynamic> note) async {
+    await db.update(
+        'answers_table',
+        note,
+        where: 'id = ?',
+        whereArgs: [note['id']]);
+  }
+
+   static Future<List<Map<String, dynamic>>> getAnswer1List() async {
+    if (db == null) {
+      await openDB();
+    }else{
+      return await db.query('answers_table');
+    }
+
+   }
+
+} 

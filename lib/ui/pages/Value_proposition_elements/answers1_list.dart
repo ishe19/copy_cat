@@ -1,5 +1,5 @@
 import 'package:copy_cat/ui/pages/Value_proposition_elements/value_proposition.dart';
-import 'package:copy_cat/ui/pages/Value_proposition_elements/values_db.dart';
+import 'package:copy_cat/models/db2.dart';
 import 'package:flutter/material.dart';
 
 
@@ -19,10 +19,10 @@ class NoteListState extends State<Answer1List> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Strengths'),
+        title: Text('Answers'),
       ),
       body: FutureBuilder(
-        future: DBManagerAnswer1.getAnswer1List(),
+        future: DBManagerCustAnswers.getAnswer1List(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final notes = snapshot.data;
@@ -40,9 +40,8 @@ class NoteListState extends State<Answer1List> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          _NoteTitle(notes[index]['title']),
+                          _NoteTitle(notes[index]['answer']),
                           Container(height: 4,),
-                          _NoteText(notes[index]['text'])
                         ],
                       ),
                     ),
