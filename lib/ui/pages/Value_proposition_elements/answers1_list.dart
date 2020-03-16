@@ -2,14 +2,11 @@ import 'package:copy_cat/ui/pages/Value_proposition_elements/value_proposition.d
 import 'package:copy_cat/models/db2.dart';
 import 'package:flutter/material.dart';
 
-
-
 class Answer1List extends StatefulWidget {
-
-final String question;
+  final String question;
   final int modelId;
 
-Answer1List(this.question, this.modelId);
+  Answer1List(this.question, this.modelId);
   @override
   NoteListState createState() {
     return new NoteListState();
@@ -17,7 +14,6 @@ Answer1List(this.question, this.modelId);
 }
 
 class NoteListState extends State<Answer1List> {
-
   var list = [
     "What is the customer category?",
     "What are the current negative/undesirable Experiences",
@@ -27,11 +23,12 @@ class NoteListState extends State<Answer1List> {
     "How does the competing product performance compare?"
   ];
 
- @override
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     print(widget.question);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,74 +36,74 @@ class NoteListState extends State<Answer1List> {
         title: Text('Customer Category'),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[
-              Colors.black,
-              Colors.blue
-            ])
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Colors.black, Colors.blue])),
+        ),
+      ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    colors: [Colors.blue, Colors.black])),
           ),
-        ),
-      ),
-      body: Stack(fit: StackFit.expand,
-      children: <Widget>[
-        Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin:Alignment.bottomLeft,
-            end: Alignment.topRight,
-            colors:[
-              Colors.blue,
-              Colors.black
-            ]
-          )
-        ),
-      ),FutureBuilder(
-        future: DBManagerAnswers.getLists(widget.question, widget.modelId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            final notes = snapshot.data;
-            print(notes);
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    for(int i ; i < list.length + 1; i++){
-                    if(widget.question == list[i]){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Answers1(NoteMode.Editing, notes[index], list[i])));
-                    }
-                  }
-                  },
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30.0, bottom: 30, left: 13.0, right: 22.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          _NoteTitle(notes[index]['answer']),
-                          Container(height: 4,),
-                          IconButton(icon: Icon(Icons.edit),
-                          onPressed: (
-
-                          ) {},),
-                        ],
+          FutureBuilder(
+            future: DBManagerAnswers.getLists(widget.question, widget.modelId),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                final notes = snapshot.data;
+                print(notes);
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        for (int i; i < list.length + 1; i++) {
+                          if (widget.question == list[i]) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Answers1(
+                                        NoteMode.Editing,
+                                        notes[index],
+                                        list[i])));
+                          }
+                        }
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 30.0, bottom: 30, left: 13.0, right: 22.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              _NoteTitle(notes[index]['answer']),
+                              Container(
+                                height: 4,
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {},
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
+                  itemCount: notes == null ? 0 : notes.length,
                 );
-              },
-              itemCount: notes == null? 0 : notes.length,
-            );
-          }
-          return Center(child: CircularProgressIndicator());
-        },
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
+        ],
       ),
-      ],
-      ),
-      );
+    );
   }
 }
 
@@ -114,16 +111,12 @@ class _NoteTitle extends StatelessWidget {
   final String _title;
 
   _NoteTitle(this._title);
-  
+
   @override
   Widget build(BuildContext context) {
     return Text(
       _title,
-      style: TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.bold
-      ),
+      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
     );
   }
 }
-

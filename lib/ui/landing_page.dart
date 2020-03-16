@@ -11,12 +11,12 @@ class LandingPage extends StatefulWidget {
   _LandingPageState createState() => _LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> with SingleTickerProviderStateMixin {
-
+class _LandingPageState extends State<LandingPage>
+    with SingleTickerProviderStateMixin {
   TabController tabController;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
     DBManagerSwot.openDB();
@@ -26,12 +26,11 @@ class _LandingPageState extends State<LandingPage> with SingleTickerProviderStat
     DBManagerCustomer.openDB();
     DBManagerAnswers.openDB();
 
-
     tabController = new TabController(length: 2, vsync: this);
   }
 
   @override
-  void dispose(){
+  void dispose() {
     tabController.dispose();
     super.dispose();
   }
@@ -46,34 +45,39 @@ class _LandingPageState extends State<LandingPage> with SingleTickerProviderStat
             child: TabBar(
               controller: tabController,
               tabs: <Widget>[
-
                 Tab(
-                  icon: Icon(Icons.dashboard, color: Colors.black,),
-                  child: Text("Dashboard", style: TextStyle(color: Colors.black,)),
+                  icon: Icon(
+                    Icons.dashboard,
+                    color: Colors.black,
+                  ),
+                  child: Text("Dashboard",
+                      style: TextStyle(
+                        color: Colors.black,
+                      )),
                 ),
                 Tab(
-                  icon: Icon(Icons.person, color: Colors.black,),
-                  child: Text("Profile", style: TextStyle(color: Colors.black,),),
+                  icon: Icon(
+                    Icons.person,
+                    color: Colors.black,
+                  ),
+                  child: Text(
+                    "Profile",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
               ],
-            )
-        ),
+            )),
       ),
       body: TabBarView(
-      controller: tabController,
-      children: <Widget>[
-        dash.Dashboard(),
-        //  dash.Dashboard(widget.cameras),
-        prof.ProfileView(),
-      ],
-    ),
-
+        controller: tabController,
+        children: <Widget>[
+          dash.Dashboard(),
+          //  dash.Dashboard(widget.cameras),
+          prof.ProfileView(),
+        ],
+      ),
     );
   }
 }
-
-
-
-
-
-
