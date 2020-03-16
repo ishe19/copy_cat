@@ -2,16 +2,11 @@ import 'package:copy_cat/models/db_manager.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';
 import 'package:flutter/material.dart';
 
-enum NoteMode { 
-  Editing,
-  Adding
-}
+enum NoteMode { Editing, Adding }
 
-
-final formkey = new GlobalKey<FormState> ();
+final formkey = new GlobalKey<FormState>();
 
 class CustomerDetails extends StatefulWidget {
-
   final NoteMode noteMode;
   final Map<String, dynamic> note;
 
@@ -20,46 +15,35 @@ class CustomerDetails extends StatefulWidget {
   // final cameras;
   // Newswot(this.cameras);//
 
-
   @override
   CustomerDetailsState createState() => CustomerDetailsState();
 }
 
 class CustomerDetailsState extends State<CustomerDetails> {
-
   String subjectTitle;
   TextEditingController _subjectTitleController = new TextEditingController();
-
-
 
   Color labelColor = Colors.grey;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    
-    _subjectTitleController.addListener(
-      (){
-        setState(() {
-          subjectTitle = _subjectTitleController.text;
-        });
-      }
-    );
 
-   
+    _subjectTitleController.addListener(() {
+      setState(() {
+        subjectTitle = _subjectTitleController.text;
+      });
+    });
   }
 
   bool validateForm() {
-    if(formkey.currentState.validate()){
+    if (formkey.currentState.validate()) {
       formkey.currentState.save();
       return true;
-
-    }else{
+    } else {
       return false;
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +51,7 @@ class CustomerDetailsState extends State<CustomerDetails> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.close),
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
         ),
@@ -76,22 +60,13 @@ class CustomerDetailsState extends State<CustomerDetails> {
           IconButton(
             icon: Icon(Icons.done),
             onPressed: () {
-              if(validateForm()) {
-                      if (widget.noteMode == NoteMode.Adding) {
-                        DBManagerCustomer.insertSubject({
-                          'SubjectTitle': subjectTitle,
-                        
-                        });
-                      } else if (widget?.noteMode == NoteMode.Editing) {
-                        DBManagerCustomer.updateSubject({
-                          'id': widget.note['id'],
-                          'SubjectTitle': _subjectTitleController.text,
-                          
-                        });
-                    }
-                    print("$subjectTitle");
-                  Navigator.pop(context);
-                  }
+              if (validateForm()) {
+                DBManagerCustomer.insertSubject({
+                  'SubjectTitle': subjectTitle,
+                });
+              }
+              print("$subjectTitle");
+              Navigator.pop(context);
             },
           )
         ],
@@ -102,14 +77,11 @@ class CustomerDetailsState extends State<CustomerDetails> {
             key: formkey,
             child: Theme(
               data: ThemeData(
-                brightness: Brightness.dark,
-                indicatorColor: Colors.green,
-                inputDecorationTheme: InputDecorationTheme(
-                  labelStyle: TextStyle(
-                    color: Uidata.primaryColor, fontSize: 20.0
-                  )
-                )
-              ),
+                  brightness: Brightness.dark,
+                  indicatorColor: Colors.green,
+                  inputDecorationTheme: InputDecorationTheme(
+                      labelStyle: TextStyle(
+                          color: Uidata.primaryColor, fontSize: 20.0))),
               child: Container(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -123,12 +95,11 @@ class CustomerDetailsState extends State<CustomerDetails> {
                         primaryColorDark: Uidata.primaryColor,
                       ),
                       child: TextFormField(
-                        onTap: (){
-
-                        },
+                        onTap: () {},
                         controller: _subjectTitleController,
                         onSaved: (value) => subjectTitle = value,
-                        validator: (val) =>  val.length == 0? "Please enter title" : null,
+                        validator: (val) =>
+                            val.length == 0 ? "Please enter title" : null,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),
                           labelText: "Title",
@@ -139,7 +110,6 @@ class CustomerDetailsState extends State<CustomerDetails> {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                     ),
-                    
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                     ),
@@ -150,22 +120,28 @@ class CustomerDetailsState extends State<CustomerDetails> {
                           Expanded(
                             child: FlatButton(
                               splashColor: Color.fromRGBO(211, 211, 211, 0.8),
-                              onPressed: (){
-                              },
-                              child: Icon(Icons.folder_open, color: Colors.grey, size: 50.0,),
+                              onPressed: () {},
+                              child: Icon(
+                                Icons.folder_open,
+                                color: Colors.grey,
+                                size: 50.0,
+                              ),
                             ),
                           ),
                           Expanded(
                             child: FlatButton(
-                                color: Colors.white,
+                              color: Colors.white,
                               splashColor: Color.fromRGBO(211, 211, 211, 0.8),
-                                child: Icon(Icons.camera_alt, color: Colors.grey, size: 50.0,),
-                                onPressed: (){
-                                  // Navigator.push(context, MaterialPageRoute(builder: (context) => CameraScreen()));
-                                },
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: Colors.grey,
+                                size: 50.0,
                               ),
+                              onPressed: () {
+                                // Navigator.push(context, MaterialPageRoute(builder: (context) => CameraScreen()));
+                              },
+                            ),
                           ),
-
                         ],
                       ),
                     ),
@@ -178,6 +154,4 @@ class CustomerDetailsState extends State<CustomerDetails> {
       ),
     );
   }
-
-
 }

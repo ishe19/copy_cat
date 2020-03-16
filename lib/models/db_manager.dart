@@ -610,16 +610,13 @@ class DBManagerCustomer{
   static Database db;
   static Future openDB() async {
     db = await openDatabase(
-      join(await getDatabasesPath(), 'Customer.db'),
+      join(await getDatabasesPath(), 'CustomerDb.db'),
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute('''
           create table Subject (
             id integer primary key autoincrement,
-            SubjectTitle text not null,
-            modelId text not null
-
-            
+            SubjectTitle text not null
           );''');
       });
       }

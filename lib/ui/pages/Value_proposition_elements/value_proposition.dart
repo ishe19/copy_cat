@@ -75,10 +75,10 @@ class ValueDashboardState extends State<ValueDashboard> {
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
-                                     Padding(
-                                       padding: const EdgeInsets.only(top:5.0, left: 15.0),
-                                       child: CustomerTitle(notes[index]['SubjectTitle']),
-                                     ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top:5.0, left: 15.0),
+                                      child: CustomerTitle(notes[index]['SubjectTitle']),
+                                    ),
                                     ],
                                   ),
                                   

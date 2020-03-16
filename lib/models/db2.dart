@@ -203,42 +203,37 @@ class DBManagerAnswers {
             id integer primary key autoincrement,
             answer text not null,
             modelID text not null
-
           );''');
         await db.execute('''
           create table Answers2(
             id integer primary key autoincrement,
-            answer text not null
+            answer text not null,
             modelID text not null
 
           );''');
         await db.execute('''
           create table Answers3(
             id integer primary key autoincrement,
-            answer text not null
+            answer text not null,
             modelID text not null
-
           );''');
         await db.execute('''
           create table Answers4(
             id integer primary key autoincrement,
-            answer text not null
+            answer text not null,
             modelID text not null
-
           );''');
         await db.execute('''
           create table Answers5(
             id integer primary key autoincrement,
-            answer text not null
+            answer text not null,
             modelID text not null
-
           );''');
         await db.execute('''
           create table Answers6(
             id integer primary key autoincrement,
-            answer text not null
+            answer text not null,
             modelID text not null
-
           );''');
 
       }
