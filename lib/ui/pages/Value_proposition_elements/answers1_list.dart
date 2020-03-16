@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 
 class Answer1List extends StatefulWidget {
 
+final String question;
+  final int modelId;
 
+Answer1List(this.question, this.modelId);
   @override
   NoteListState createState() {
     return new NoteListState();
@@ -15,33 +18,80 @@ class Answer1List extends StatefulWidget {
 
 class NoteListState extends State<Answer1List> {
 
+  var list = [
+    "What is the customer category?",
+    "What are the current negative/undesirable Experiences",
+    "What are the concerns about the current solutions",
+    "Unmet needs",
+    "What are the Competing products?",
+    "How does the competing product performance compare?"
+  ];
+
+ @override
+  void initState(){
+    super.initState();
+    print(widget.question);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Answers'),
+        title: Text('Customer Category'),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+              Colors.black,
+              Colors.blue
+            ])
+          ),
+        ),
       ),
-      body: FutureBuilder(
-        future: DBManagerCustAnswers.getAnswer1List(),
+      body: Stack(fit: StackFit.expand,
+      children: <Widget>[
+        Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin:Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors:[
+              Colors.blue,
+              Colors.black
+            ]
+          )
+        ),
+      ),FutureBuilder(
+        future: DBManagerAnswers.getLists(widget.question, widget.modelId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final notes = snapshot.data;
+            print(notes);
             return ListView.builder(
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
+                    for(int i ; i < list.length + 1; i++){
+                    if(widget.question == list[i]){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Answers1(NoteMode.Editing,notes[index])));
+                      MaterialPageRoute(builder: (context) => Answers1(NoteMode.Editing, notes[index], list[i])));
+                    }
+                  }
                   },
                   child: Card(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30.0, bottom: 30, left: 13.0, right: 22.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           _NoteTitle(notes[index]['answer']),
                           Container(height: 4,),
+                          IconButton(icon: Icon(Icons.edit),
+                          onPressed: (
+
+                          ) {},),
                         ],
                       ),
                     ),
@@ -54,15 +104,9 @@ class NoteListState extends State<Answer1List> {
           return Center(child: CircularProgressIndicator());
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Answers1(NoteMode.Adding, null)));
-        },
-        child: Icon(Icons.add),
+      ],
       ),
-    );
+      );
   }
 }
 
@@ -83,20 +127,3 @@ class _NoteTitle extends StatelessWidget {
   }
 }
 
-class _NoteText extends StatelessWidget {
-  final String _text;
-
-  _NoteText(this._text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      _text,
-      style: TextStyle(
-          color: Colors.grey.shade600
-      ),
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-    );
-  }
-}

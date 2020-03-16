@@ -17,7 +17,7 @@ class CopyCat extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Business Manager Copy",
+      title: "Business Manager Tool",
       home: LandingPage(),
     );
   }

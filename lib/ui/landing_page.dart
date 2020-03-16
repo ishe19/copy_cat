@@ -24,7 +24,7 @@ class _LandingPageState extends State<LandingPage> with SingleTickerProviderStat
     DBManagerModel.openDB();
     DBManagerGuide.openDB();
     DBManagerCustomer.openDB();
-    DBManagerCustAnswers.openDB();
+    DBManagerAnswers.openDB();
 
 
     tabController = new TabController(length: 2, vsync: this);

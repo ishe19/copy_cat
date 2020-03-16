@@ -1,12 +1,9 @@
 import 'package:copy_cat/models/db_manager.dart';
 import 'package:copy_cat/ui/pages/canvas_elements/canvas_model.dart';
-import 'package:copy_cat/ui/pages/swot_elements/final_table.dart';
 import 'package:copy_cat/ui/pages/view_post.dart';
 import 'package:flutter/material.dart';
 import 'package:copy_cat/ui/utils/uidata.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:copy_cat/models/db2.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'igc.dart';
 import 'igc_table.dart';
 

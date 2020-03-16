@@ -16,7 +16,7 @@ class _CanvasHomeState extends State<CanvasHome> {
     
     return Container(
       child: FutureBuilder(
-       future: DBManagerModel.getList(),
+      future: DBManagerModel.getList(),
         builder: (context, snapshot) {
           final notes = snapshot.data;
           
@@ -35,7 +35,7 @@ class _CanvasHomeState extends State<CanvasHome> {
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
-                                     ModelTitle(notes[index]['ModelTitle']),
+                                    ModelTitle(notes[index]['ModelTitle']),
                                     ],
                                   ),
                                   Row(

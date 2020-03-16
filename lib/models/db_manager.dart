@@ -616,7 +616,8 @@ class DBManagerCustomer{
         await db.execute('''
           create table Subject (
             id integer primary key autoincrement,
-            SubjectTitle text not null
+            SubjectTitle text not null,
+            modelId text not null
 
             
           );''');
