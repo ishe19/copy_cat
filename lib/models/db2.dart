@@ -110,47 +110,183 @@ class DBManagerGuide {
   }
 }
 
-class DBManagerCustAnswers {
-  static Database db;
-
-  static Future openDB() async {
-    db = await openDatabase(join(await getDatabasesPath(), 'testAnswers.db'),
-        version: 1, onCreate: (Database db, int version) async {
-      await db.execute('''
-          create table answers_table(
-            id integer primary key autoincrement,
-            answer text not null
-          );''');
-    });
-  }
-
-  static Future insertAnswer1(Map<String, dynamic> note) async {
-    await db.insert('answers_table', note);
-  }
-
-  static Future deleteAnswer1(int id) async {
-    await db.delete('answers_table', where: 'id = ?', whereArgs: [id]);
-  }
-
-  static Future updateAnswer1(Map<String, dynamic> note) async {
-    await db.update('answers_table', note,
-        where: 'id = ?', whereArgs: [note['id']]);
-  }
-
-  static Future<List<Map<String, dynamic>>> getAnswer1List() async {
-    if (db == null) {
-      await openDB();
-    } else {
-      return await db.query('answers_table');
-    }
-  }
-}
-
 class DBManagerAnswers {
   static Database db;
 
   static Future openDB() async {
     db = await openDatabase(join(await getDatabasesPath(), 'VPAnswers.db'),
+        version: 1, onCreate: (Database db, int version) async {
+      await db.execute('''
+          create table Answers1(
+            id integer primary key autoincrement,
+            answer text not null,
+            modelID text not null
+          );''');
+      await db.execute('''
+          create table Answers2(
+            id integer primary key autoincrement,
+            answer text not null,
+            modelID text not null
+
+          );''');
+      await db.execute('''
+          create table Answers3(
+            id integer primary key autoincrement,
+            answer text not null,
+            modelID text not null
+          );''');
+      await db.execute('''
+          create table Answers4(
+            id integer primary key autoincrement,
+            answer text not null,
+            modelID text not null
+          );''');
+      await db.execute('''
+          create table Answers5(
+            id integer primary key autoincrement,
+            answer text not null,
+            modelID text not null
+          );''');
+      await db.execute('''
+          create table Answers6(
+            id integer primary key autoincrement,
+            answer text not null,
+            modelID text not null
+          );''');
+    });
+  }
+
+  static Future<List> getLists(String tableName, int modelID) async {
+    if (db == null) {
+      await openDB();
+    } else {
+      if (tableName == "one") {
+        List<Map> results = await db.query("Answers1",
+            columns: ["id", "answer", "modelID"],
+            where: 'modelID = ?',
+            whereArgs: [modelID]);
+
+        if (results.length > 0) {
+          return results;
+        }
+        return null;
+      } else if (tableName == "two") {
+        List<Map> results = await db.query("Answers2",
+            columns: ["id", "answer", "modelID"],
+            where: 'modelID = ?',
+            whereArgs: [modelID]);
+
+        if (results.length > 0) {
+          return results;
+        }
+        return null;
+      } else if (tableName == "three") {
+        List<Map> results = await db.query("Answers3",
+            columns: ["id", "answer", "modelID"],
+            where: 'modelID = ?',
+            whereArgs: [modelID]);
+
+        if (results.length > 0) {
+          return results;
+        }
+        return null;
+      } else if (tableName == "four") {
+        List<Map> results = await db.query("Answers4",
+            columns: ["id", "answer", "modelID"],
+            where: 'modelID = ?',
+            whereArgs: [modelID]);
+
+        if (results.length > 0) {
+          return results;
+        }
+        return null;
+      } else if (tableName == "five") {
+        List<Map> results = await db.query("Answers5",
+            columns: ["id", "answer", "modelID"],
+            where: 'modelID = ?',
+            whereArgs: [modelID]);
+
+        if (results.length > 0) {
+          return results;
+        }
+        return null;
+      } else if (tableName == "six") {
+        List<Map> results = await db.query("Answers6",
+            columns: ["id", "answer", "modelID"],
+            where: 'modelID = ?',
+            whereArgs: [modelID]);
+
+        if (results.length > 0) {
+          return results;
+        }
+        return null;
+      }
+    }
+  }
+
+  static Future insertCustSegNote(
+      Map<String, dynamic> note, String tableName) async {
+    if (tableName == "one") {
+      await db.insert('Answers1', note);
+    } else if (tableName == "two") {
+      await db.insert('Answers2', note);
+    } else if (tableName == "three") {
+      await db.insert('Answers3', note);
+    } else if (tableName == "four") {
+      await db.insert('Answers4', note);
+    } else if (tableName == "five") {
+      await db.insert('Answers5', note);
+    } else if (tableName == "six") {
+      await db.insert('Answers6', note);
+    }
+  }
+
+  static Future updateCustSegNote(
+      Map<String, dynamic> note, String tableName) async {
+    if (tableName == "two") {
+      await db
+          .update('Answers', note, where: 'id = ?', whereArgs: [note['id']]);
+    } else if (tableName == "two") {
+      await db
+          .update('Answers', note, where: 'id = ?', whereArgs: [note['id']]);
+    } else if (tableName == "three") {
+      await db
+          .update('Answers', note, where: 'id = ?', whereArgs: [note['id']]);
+    } else if (tableName == "four") {
+      await db
+          .update('Answers', note, where: 'id = ?', whereArgs: [note['id']]);
+    } else if (tableName == "five") {
+      await db
+          .update('Answers', note, where: 'id = ?', whereArgs: [note['id']]);
+    } else if (tableName == "six") {
+      await db
+          .update('Answers', note, where: 'id = ?', whereArgs: [note['id']]);
+    }
+  }
+
+  static Future deleteNote(int id, String tableName) async {
+    if (tableName == "Customer Segments") {
+      await db.delete('Answers', where: 'id = ?', whereArgs: [id]);
+    } else if (tableName == "Value Propositions") {
+      await db.delete('Answers', where: 'id = ?', whereArgs: [id]);
+    } else if (tableName == "Channels") {
+      await db.delete('Answers', where: 'id = ?', whereArgs: [id]);
+    } else if (tableName == "Customer Relationships") {
+      await db.delete('Answers', where: 'id = ?', whereArgs: [id]);
+    } else if (tableName == "Revenue Streams") {
+      await db.delete('Answers', where: 'id = ?', whereArgs: [id]);
+    } else if (tableName == "Key Resources") {
+      await db.delete('Answers', where: 'id = ?', whereArgs: [id]);
+    }
+  }
+}
+
+
+class DBManagerQueAnswers {
+  static Database db;
+
+  static Future openDB() async {
+    db = await openDatabase(join(await getDatabasesPath(), 'QueAnswers.db'),
         version: 1, onCreate: (Database db, int version) async {
       await db.execute('''
           create table Answers1(
