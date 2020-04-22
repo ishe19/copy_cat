@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:copy_cat/ui/utils/uidata.dart';
 import 'package:copy_cat/models/db_manager.dart';
-// import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+
+import 'utils/uidata.dart';
 
 enum NoteMode { 
   Editing,
@@ -9,57 +9,56 @@ enum NoteMode {
 }
 
 
+
 final formkey = new GlobalKey<FormState> ();
 
-class SwotDetails extends StatefulWidget {
+class NewProject extends StatefulWidget {
 
-  final NoteMode noteMode;
   final Map<String, dynamic> note;
-
-  SwotDetails(this.noteMode, this.note);
+  final NoteMode noteMode;
 
   // final cameras;
-  // Newswot(this.cameras);
+  NewProject(this.note, this.noteMode);
 
 
   @override
-  SwotDetailsState createState() => SwotDetailsState();
+  NewProjectState createState() => NewProjectState();
 }
 
-class SwotDetailsState extends State<SwotDetails> {
+class NewProjectState extends State<NewProject> {
 
-  String swotTitle;
-  String swotDescription;
+  String modelTitle;
+  String modelDescription;
+
+  final form = formkey.currentState;
 
 
-
-
-
-  TextEditingController _swotTitleController = new TextEditingController();
-  TextEditingController _swotDescriptionController = new TextEditingController();
-
+  TextEditingController _modelTitleController = new TextEditingController();
+  TextEditingController _modelDescriptionController = new TextEditingController();
 
   Color labelColor = Colors.grey;
+  
+  
+
 
   @override
   void initState(){
     super.initState();
-    _swotDescriptionController.addListener(
+    _modelDescriptionController.addListener(
       (){
         setState(() {
-          swotDescription = _swotDescriptionController.text;
+          modelDescription = _modelDescriptionController.text;
         });
       }
     );
-    _swotTitleController.addListener(
+    _modelTitleController.addListener(
       (){
         setState(() {
-          swotTitle = _swotTitleController.text;
+          modelTitle = _modelTitleController.text;
         });
       }
     );
 
-   
   }
 
   bool validateForm() {
@@ -72,8 +71,6 @@ class SwotDetailsState extends State<SwotDetails> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,27 +79,39 @@ class SwotDetailsState extends State<SwotDetails> {
           icon: Icon(Icons.close),
           onPressed: (){
             Navigator.pop(context);
+            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
           },
         ),
-        title: Text("New SWOT "),
+        title: Text("New Project"),
+         flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+              Colors.black,
+              Colors.blue
+            ])
+          ),
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.done),
             onPressed: () {
               if(validateForm()) {
                       if (widget.noteMode == NoteMode.Adding) {
-                        DBManagerSwot.insertSwot({
-                          'SwotTitle': swotTitle,
-                          'SwotDescription': swotDescription,
+                        DBManagerProjects.insertItem({
+                          'ModelTitle': modelTitle,
+                          'ModelDescription': modelDescription,
                         });
                       } else if (widget?.noteMode == NoteMode.Editing) {
-                        DBManagerSwot.updateModel({
+                        DBManagerProjects.updateItem({
                           'id': widget.note['id'],
-                          'SwotTitle': _swotTitleController.text,
-                          'SwotDescription': _swotDescriptionController.text,
-                        });
+                          'ModelTitle': _modelTitleController.text,
+                          'ModelDescription': _modelDescriptionController.text,
+                       });
                     }
-                    print("$swotTitle $swotDescription");
+                    print("$modelTitle, $modelDescription,");
                   Navigator.pop(context);
                   }
             },
@@ -139,8 +148,8 @@ class SwotDetailsState extends State<SwotDetails> {
                         onTap: (){
 
                         },
-                        controller: _swotTitleController,
-                        onSaved: (value) => swotTitle = value,
+                        controller: _modelTitleController,
+                        onSaved: (value) => modelTitle = value,
                         validator: (val) =>  val.length == 0? "Please enter title" : null,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),
@@ -158,9 +167,9 @@ class SwotDetailsState extends State<SwotDetails> {
                         primaryColorDark: Uidata.primaryColor,
                       ),
                       child: TextFormField(
-                        onSaved: (value) => swotDescription = value,
+                        controller: _modelDescriptionController,
+                        onSaved: (value) => modelDescription = value,
                         validator: (val) =>  val.length == 0? "Please enter description" : null,
-                        controller: _swotDescriptionController,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: labelColor),
                           labelText: "Description",
@@ -171,8 +180,12 @@ class SwotDetailsState extends State<SwotDetails> {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
+                    Theme(
+                      data: ThemeData(
+                        primaryColor: Colors.black,
+                        primaryColorDark: Uidata.primaryColor,
+                      ),
+                    
                       child: Row(
                         children: <Widget>[
                           Expanded(
@@ -209,4 +222,3 @@ class SwotDetailsState extends State<SwotDetails> {
 
 
 }
-

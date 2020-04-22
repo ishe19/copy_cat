@@ -7,11 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:copy_cat/models/db2.dart';
-import 'dart:convert';
 
 enum NoteMode { Editing, Adding }
 
 class ValueDashboard extends StatefulWidget {
+  final String title;
+  ValueDashboard(this.title);
   @override
   ValueDashboardState createState() => ValueDashboardState();
 }
@@ -24,7 +25,7 @@ class ValueDashboardState extends State<ValueDashboard> {
 
       // // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
-        title: Text("Value Proposition canvas"),
+        title: Text("Value Propositions for: " + widget.title),
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -84,14 +85,8 @@ class ValueDashboardState extends State<ValueDashboard> {
                                                 color: Uidata.primaryColor),
                                           ),
                                           onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        CustomerElements(
-                                                            notes[index]
-                                                                ['id'])));
-                                          },
+                                            //Navigator.push(context, MaterialPageRoute(builder: (context) => ModelDetails(modelTitle, notes[index]['id'])));
+                                        },
                                         ),
                                         FlatButton(
                                           color: Colors.white,
@@ -149,7 +144,8 @@ class CustomerElements extends StatefulWidget {
   // Dashboard(this.cameras);
 
   final int modelId;
-  CustomerElements(this.modelId);
+  final String title;
+  CustomerElements(this.title,this.modelId);
   @override
   CustomerElementsState createState() => CustomerElementsState();
 }
@@ -175,7 +171,7 @@ class CustomerElementsState extends State<CustomerElements>
     return Scaffold(
 //      drawer: SideDrawer(),
         appBar: AppBar(
-          title: Text("Customer Details"),
+          title: Text(widget.title),
           flexibleSpace: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -265,6 +261,15 @@ class _CustomerCategoryState extends State<CustomerCategory> {
     "six",
   ];
 
+  var list = [
+    "What is the customer category?",
+    "What are the current negative/undesirable Experiences",
+    "What are the concerns about the current solutions",
+    "What are the unmet needs",
+    "What are the competing products?",
+    "How does the competing product performance compare?"
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -279,21 +284,19 @@ class _CustomerCategoryState extends State<CustomerCategory> {
       SafeArea(
           child: ListView(
         children: <Widget>[
-          cardView("What is the customer category?", items[0]),
-          cardView("What are the current negative/undesirable Experiences",
-              items[1]),
-          cardView(
-              "What are the concerns about the current solutions", items[2]),
-          cardView("Unmet needs", items[3]),
-          cardView("What are the Competing products?", items[4]),
-          cardView(
-              "How does the competing product performance compare?", items[5]),
+          cardView("What is the customer category?", items[0], list[0]),
+          cardView("What are the current negative/undesirable Experiences",items[1], list[1]),
+          cardView("What are the concerns about the current solutions",items[2], list[2]),
+          cardView("Unmet needs", items[3], list[3]),
+          cardView("What are the Competing products?", items[4], list[4]),
+          cardView("How does the competing product performance compare?",
+              items[5], list[5]),
         ],
       ))
     ]));
   }
 
-  Widget cardView(String cardName, String answerName) {
+  Widget cardView(String cardName, String answerName, String title) {
     return Card(
         child: Padding(
       padding: const EdgeInsets.all(15.0),
@@ -353,13 +356,9 @@ class _CustomerCategoryState extends State<CustomerCategory> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                Answer1List(answerName, widget.modelId)));
+                                Answer1List(answerName, widget.modelId,title)));
                   },
-                ),
-                IconButton(
-                  icon: Icon(Icons.info),
-                  onPressed: () {},
-                ),
+                )
               ],
             )
           ],
@@ -403,6 +402,15 @@ class ProductCategoryState extends State<ProductCategory> {
     "six",
   ];
 
+    var list = [
+    "What is the product?",
+    "What solutions to current negative/undesirable Experiences",
+    "What is the respons concerns about the current solutions",
+    "What are solutions to the unmet needs",
+    "What are your product differentiators?",
+    "What is the evidence of you product performance?"
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -417,16 +425,12 @@ class ProductCategoryState extends State<ProductCategory> {
         SafeArea(
           child: ListView(
             children: <Widget>[
-              cardView("what is your product?", items[0]),
-              cardView(
-                  "solutions to current negative/ undesirable experiences??",
-                  items[0]),
-              cardView("What are your solutions to unmet needs?", items[0]),
-              cardView("What are your responses to concerns about solutions",
-                  items[0]),
-              cardView("What is your product differentiator?", items[0]),
-              cardView("What is the evidence of your product's performance?",
-                  items[0]),
+              cardView("what is your product?", items[0], list[0]),
+              cardView("solutions to current negative/ undesirable experiences??",items[1], list[1]),
+              cardView("What are your solutions to unmet needs?", items[2], list[2]),
+              cardView("What are your responses to concerns about solutions",items[3], list[3]),
+              cardView("What is your product differentiator?", items[4], list[4]),
+              cardView("What is the evidence of your product's performance?",items[5],list[5]),
             ],
           ),
         ),
@@ -434,7 +438,7 @@ class ProductCategoryState extends State<ProductCategory> {
     );
   }
 
-  Widget cardView(String cardName, String answerName) {
+  Widget cardView(String cardName, String answerName, String title) {
     return Card(
         child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -493,13 +497,9 @@ class ProductCategoryState extends State<ProductCategory> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  QueAnswer1List(answerName, widget.modelId)));
+                                  QueAnswer1List(answerName, widget.modelId,title)));
                     },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.info),
-                    onPressed: () {},
-                  ),
+                  )
                 ],
               )
             ]))));
@@ -628,13 +628,15 @@ class Answers1State extends State<Answers1> {
   @override
   void didChangeDependencies() {
     if (widget.noteMode == NoteMode.Editing) {
-      _textController.text = widget.note['text'];
+      _textController.text = widget.note['answer'];
     }
     super.didChangeDependencies();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    print(widget.note['id']);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.noteMode == NoteMode.Adding
@@ -658,9 +660,10 @@ class Answers1State extends State<Answers1> {
               children: <Widget>[
                 _NoteButton('Save', Colors.blue, () {
                   final answer = _textController.text;
-                    DBManagerAnswers.updateCustSegNote(
-                        {'id': widget.note['id'], 'answer': answer},
-                        widget.answerName);
+                  print(widget.note['id']);
+                  DBManagerAnswers.updateCustSegNote(
+                      {'id': widget.note['id'], 'answer': answer},
+                      widget.answerName);
                   Navigator.pop(context);
                 }),
                 Container(
@@ -669,30 +672,25 @@ class Answers1State extends State<Answers1> {
                 _NoteButton('Discard', Colors.grey, () {
                   Navigator.pop(context);
                 }),
+                widget.noteMode == NoteMode.Editing
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: _NoteButton('Delete', Colors.red, () async {
+                          await DBManagerAnswers.deleteNote(
+                              widget.note['id'], widget.answerName);
+                          Navigator.pop(context);
+                        }),
+                      )
+                    : Container()
               ],
-            ),
-            widget.noteMode == NoteMode.Editing
-                ? Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: _NoteButton('Delete', Colors.red, () async {
-                            await DBManagerAnswers.deleteNote(
-                                widget.note['id'], widget.answerName);
-                            Navigator.pop(context);
-                          }),
-                        ),
-                      ),
-                    ],
-                  )
-                : Container()
+            )
           ],
         ),
       ),
     );
   }
 }
+
 
 class _NoteButton extends StatelessWidget {
   final String _text;
@@ -729,20 +727,19 @@ class QueAnswers1 extends StatefulWidget {
   }
 }
 
-class QueAnswers1State extends State<Answers1> {
+class QueAnswers1State extends State<QueAnswers1> {
   final TextEditingController _textController = TextEditingController();
 
   @override
   void didChangeDependencies() {
     if (widget.noteMode == NoteMode.Editing) {
-      _textController.text = widget.note['text'];
+      _textController.text = widget.note['answer'];
     }
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.note['id']);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.noteMode == NoteMode.Adding
@@ -767,9 +764,9 @@ class QueAnswers1State extends State<Answers1> {
                 _NoteButton('Save', Colors.blue, () {
                   final answer = _textController.text;
                   print(widget.note['id']);
-                    DBManagerQueAnswers.updateCustSegNote(
-                        {'id': widget.note['id'] , 'answer': answer},
-                        widget.answerName);
+                  DBManagerQueAnswers.updateCustSegNote(
+                      {'id': widget.note['id'], 'answer': answer},
+                      widget.answerName);
                   Navigator.pop(context);
                 }),
                 Container(
@@ -788,7 +785,7 @@ class QueAnswers1State extends State<Answers1> {
                         }),
                       )
                     : Container()
-                ],
+              ],
             )
           ],
         ),

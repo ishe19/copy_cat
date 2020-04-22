@@ -10,64 +10,55 @@ class DBManagerViews {
       await db.execute('''
           create table customer_segments(
             id integer primary key autoincrement,
-            title text not null,
-            description text not null,
+            title text not null,         
             modelID text not null
           );''');
       await db.execute('''
           create table value_propositions(
             id integer primary key autoincrement,
-            title text not null,
-            description text not null,
+            title text not null,           
             modelID integer not null
           );''');
       await db.execute('''
           create table channels(
             id integer primary key autoincrement,
-            title text not null,
-            description text not null,
+            title text not null,         
             modelID text not null
           );''');
       await db.execute('''
           create table revenue_stream(
             id integer primary key autoincrement,
-            title text not null,
-            description text not null,
+            title text not null,       
             modelID text not null
           );''');
       await db.execute('''
           create table customer_relationships(
             id integer primary key autoincrement,
-            title text not null,
-            description text not null,
+            title text not null,       
             modelID text not null
           );''');
       await db.execute('''
           create table key_resources(
             id integer primary key autoincrement,
-            title text not null,
-            description text not null,
+            title text not null,       
             modelID text not null
           );''');
       await db.execute('''
           create table key_activities(
             id integer primary key autoincrement,
-            title text not null,
-            description text not null,
+            title text not null,         
             modelID text not null
           );''');
       await db.execute('''
           create table key_partners(
             id integer primary key autoincrement,
-            title text not null,
-            description text not null,
+            title text not null,    
             modelID text not null
           );''');
       await db.execute('''
           create table cost_structure(
             id integer primary key autoincrement,
-            title text not null,
-            description text not null,
+            title text not null,          
             modelID text not null
           );''');
     });
@@ -79,7 +70,7 @@ class DBManagerViews {
     } else {
       if (tableName == "Customer Segments") {
         List<Map> results = await db.query("customer_segments",
-            columns: ["id", "title", "description", "modelID"],
+            columns: ["id", "title","modelID"],
             where: 'modelID = ?',
             whereArgs: [modelID]);
 
@@ -89,7 +80,7 @@ class DBManagerViews {
         return null;
       } else if (tableName == "Value Propositions") {
         List<Map> results = await db.query("value_propositions",
-            columns: ["id", "title", "description", "modelID"],
+            columns: ["id", "title","modelID"],
             where: 'modelID = ?',
             whereArgs: [modelID]);
 
@@ -99,7 +90,7 @@ class DBManagerViews {
         return null;
       } else if (tableName == "Channels") {
         List<Map> results = await db.query("channels",
-            columns: ["id", "title", "description", "modelID"],
+            columns: ["id", "title", "modelID"],
             where: 'modelID = ?',
             whereArgs: [modelID]);
 
@@ -109,7 +100,7 @@ class DBManagerViews {
         return null;
       } else if (tableName == "Customer Relationships") {
         List<Map> results = await db.query("customer_relationships",
-            columns: ["id", "title", "description", "modelID"],
+            columns: ["id", "title", "modelID"],
             where: 'modelID = ?',
             whereArgs: [modelID]);
 
@@ -119,7 +110,7 @@ class DBManagerViews {
         return null;
       } else if (tableName == "Revenue Streams") {
         List<Map> results = await db.query("revenue_stream",
-            columns: ["id", "title", "description", "modelID"],
+            columns: ["id", "title", "modelID"],
             where: 'modelID = ?',
             whereArgs: [modelID]);
 
@@ -129,7 +120,7 @@ class DBManagerViews {
         return null;
       } else if (tableName == "Key Resources") {
         List<Map> results = await db.query("key_resources",
-            columns: ["id", "title", "description", "modelID"],
+            columns: ["id", "title", "modelID"],
             where: 'modelID = ?',
             whereArgs: [modelID]);
 
@@ -139,7 +130,7 @@ class DBManagerViews {
         return null;
       } else if (tableName == "Key Activities") {
         List<Map> results = await db.query("key_activities",
-            columns: ["id", "title", "description", "modelID"],
+            columns: ["id", "title", "modelID"],
             where: 'modelID = ?',
             whereArgs: [modelID]);
 
@@ -149,7 +140,7 @@ class DBManagerViews {
         return null;
       } else if (tableName == "Key Partners") {
         List<Map> results = await db.query("key_partners",
-            columns: ["id", "title", "description", "modelID"],
+            columns: ["id", "title", "modelID"],
             where: 'modelID = ?',
             whereArgs: [modelID]);
 
@@ -159,7 +150,7 @@ class DBManagerViews {
         return null;
       } else if (tableName == "Cost Structure") {
         List<Map> results = await db.query("cost_structure",
-            columns: ["id", "title", "description", "modelID"],
+            columns: ["id", "title", "modelID"],
             where: 'modelID = ?',
             whereArgs: [modelID]);
 
@@ -334,111 +325,7 @@ class DBManagerSwot {
   }
 }
 
-class DBManagerChallenge {
-  static Database db;
-  static Future openDB() async {
-    db = await openDatabase(join(await getDatabasesPath(), 'challenges.db'),
-        version: 1, onCreate: (Database db, int version) async {
-      await db.execute('''
-          create table Challenge(
-            id integer primary key autoincrement,
-            challengeTitle text not null,
-            challengeDescription text not null
-          );''');
-    });
-  }
 
-  static Future insertChallenge(Map<String, dynamic> note) async {
-    await db.insert('Challenge', note);
-  }
-
-  static Future deleteChallenge(int id) async {
-    await db.delete('Challenge', where: 'id = ?', whereArgs: [id]);
-  }
-
-  static Future updateChallenge(Map<String, dynamic> note) async {
-    await db
-        .update('Challenge', note, where: 'id = ?', whereArgs: [note['id']]);
-  }
-
-  static Future<List<Map<String, dynamic>>> getList() async {
-    if (db == null) {
-      await openDB();
-    } else {
-      return await db.query('Challenge');
-    }
-  }
-}
-
-class DBManagerImpact {
-  static Database db;
-  static Future openDB() async {
-    db = await openDatabase(join(await getDatabasesPath(), 'Impact.db'),
-        version: 1, onCreate: (Database db, int version) async {
-      await db.execute('''
-          create table Impact(
-            id integer primary key autoincrement,
-            ImpactTitle text not null,
-            ImpactDescription text not null
-          );''');
-    });
-  }
-
-  static Future insertImpact(Map<String, dynamic> note) async {
-    await db.insert('Impact', note);
-  }
-
-  static Future deleteImpact(int id) async {
-    await db.delete('Impact', where: 'id = ?', whereArgs: [id]);
-  }
-
-  static Future updateImpact(Map<String, dynamic> note) async {
-    await db.update('Impact', note, where: 'id = ?', whereArgs: [note['id']]);
-  }
-
-  static Future<List<Map<String, dynamic>>> getList() async {
-    if (db == null) {
-      await openDB();
-    } else {
-      return await db.query('Impact');
-    }
-  }
-}
-
-class DBManagerSolutions {
-  static Database db;
-  static Future openDB() async {
-    db = await openDatabase(join(await getDatabasesPath(), 'solutions.db'),
-        version: 1, onCreate: (Database db, int version) async {
-      await db.execute('''
-          create table Solutions(
-            id integer primary key autoincrement,
-            solutionsTitle text not null,
-          );''');
-    });
-  }
-
-  static Future insertSolutions(Map<String, dynamic> note) async {
-    await db.insert('Solutions', note);
-  }
-
-  static Future deleteSolutions(int id) async {
-    await db.delete('Solutions', where: 'id = ?', whereArgs: [id]);
-  }
-
-  static Future updateSolutions(Map<String, dynamic> note) async {
-    await db
-        .update('Solutions', note, where: 'id = ?', whereArgs: [note['id']]);
-  }
-
-  static Future<List<Map<String, dynamic>>> getList() async {
-    if (db == null) {
-      await openDB();
-    } else {
-      return await db.query('Solutions');
-    }
-  }
-}
 
 class Note {
   int id;
@@ -498,6 +385,77 @@ class DBManagerCustomer {
       await openDB();
     } else {
       return await db.query('Subject');
+    }
+  }
+}
+
+
+class DBManagerIGC {
+  static Database db;
+  static Future openDB() async {
+    db = await openDatabase(join(await getDatabasesPath(), 'IgcDb.db'),
+        version: 1, onCreate: (Database db, int version) async {
+      await db.execute('''
+          create table igc (
+            id integer primary key autoincrement,
+            SubjectTitle text not null
+          );''');
+    });
+  }
+
+  static Future insertSubject(Map<String, dynamic> note) async {
+    await db.insert('igc', note);
+  }
+
+  static Future deleteSubject(int id) async {
+    await db.delete('igc', where: 'id = ?', whereArgs: [id]);
+  }
+
+  static Future updateSubject(Map<String, dynamic> note) async {
+    await db.update('igc', note, where: 'id = ?', whereArgs: [note['id']]);
+  }
+
+  static Future<List<Map<String, dynamic>>> getSubjectList() async {
+    if (db == null) {
+      await openDB();
+    } else {
+      return await db.query('igc');
+    }
+  }
+}
+
+
+class DBManagerProjects {
+  static Database db;
+  static Future openDB() async {
+    db = await openDatabase(join(await getDatabasesPath(), 'projects.db'),
+        version: 1, onCreate: (Database db, int version) async {
+      await db.execute('''
+          create table projects(
+            id integer primary key autoincrement,
+            ModelTitle text not null,
+            ModelDescription text not null
+          );''');
+    });
+  }
+
+  static Future insertItem(Map<String, dynamic> note) async {
+    await db.insert('projects', note);
+  }
+
+  static Future deleteItem(int id) async {
+    await db.delete('projects', where: 'id = ?', whereArgs: [id]);
+  }
+
+  static Future updateItem(Map<String, dynamic> note) async {
+    await db.update('projects', note, where: 'id = ?', whereArgs: [note['id']]);
+  }
+
+  static Future<List<Map<String, dynamic>>> getItemList() async {
+    if (db == null) {
+      await openDB();
+    } else {
+      return await db.query('projects');
     }
   }
 }
