@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:copy_cat/ui/utils/pick_images.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_saver/image_picker_saver.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 
@@ -94,6 +95,12 @@ class _MyPdfHomePageState extends State<MyPdfHomePage> {
                 style: TextStyle(fontSize: 34),
               ),
               SizedBox(height: 20.0),
+              RaisedButton(
+                child: Text("Test"),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PickImages()));
+                },
+              )
             ],
           ),
         ),

@@ -14,7 +14,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -46,6 +46,8 @@ dev_dependencies:
   shared_preferences: ^0.5.0  
   image_picker: ^0.6.2+3
   toast: ^0.1.5
+  images_to_pdf: ^0.0.1
+  printing:
 
 
 # For information on the generic Dart part of this file, see the
