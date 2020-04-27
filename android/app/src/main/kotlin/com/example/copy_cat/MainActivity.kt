@@ -1,4 +1,4 @@
-package com.example.copy_cat_reboot
+package com.example.copy_cat
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

@@ -31,115 +31,41 @@ class MyPdfHomePage extends StatefulWidget {
 
 class _MyPdfHomePageState extends State<MyPdfHomePage> {
   final _formkey = GlobalKey<FormState>();
-  
-   
-
-
-
-    Future<PdfImage> pdfImageFromImage(
-    {@required PdfDocument pdf, @required ui.Image image}) async {
-    final ByteData bytes =
-      await image.toByteData(format: ui.ImageByteFormat.rawRgba);
-
-  return PdfImage(pdf,
-      image: bytes.buffer.asUint8List(),
-      width: image.width,
-      height: image.height);
-}
-
-  Future<PdfImage> pdfImageFromImageProvider(
-    {@required PdfDocument pdf,
-    @required ImageProvider image,
-    ImageConfiguration configuration,
-    ImageErrorListener onError}) async {
-  final Completer<PdfImage> completer = Completer<PdfImage>();
-  final ImageStream stream =
-      image.resolve(configuration ?? ImageConfiguration.empty);
-
-  ImageStreamListener listener;
-  listener = ImageStreamListener((ImageInfo image, bool sync) async {
-    final PdfImage result =
-        await pdfImageFromImage(pdf: pdf, image: image.image);
-    if (!completer.isCompleted) {
-      completer.complete(result);
-    }
-    stream.removeListener(listener);
-  }, onError: (dynamic exception, StackTrace stackTrace) {
-    if (!completer.isCompleted) {
-      completer.complete(null);
-    }
-    if (onError != null) {
-      onError(exception, stackTrace);
-      print('this is the error youre looking for.');
-    } else {
-      // https://groups.google.com/forum/#!topic/flutter-announce/hp1RNIgej38
-      assert(false, 'image failed to load');
-    }
-  });
-
-  stream.addListener(listener);
-  return completer.future;
-}
 
   final pdf = pw.Document();
 
   writeOnPdf() async {
-
-    const imageProvider = const AssetImage('assets/images/Results-skeleton-logo.png');
-     
-    final PdfImage image = await pdfImageFromImageProvider(
-    pdf: pdf.document, 
-    image: imageProvider
-    );
-
-
-
-  
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a5,
-        margin: pw.EdgeInsets.all(32),
-
-        build: (pw.Context context){
-          return <pw.Widget>  [
-            pw.Header(
+    pdf.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: pw.EdgeInsets.all(32),
+      build: (pw.Context context) {
+        return <pw.Widget>[
+          pw.Header(
               level: 0,
-              child: pw.Text("This is the first test to generating ResultsPro PDFs for futher use")
-            ),
-
-            pw.Paragraph(
-              text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas sed tempus urna. Quisque sagittis purus sit amet. A arcu cursus vitae congue mauris rhoncus aenean vel elit. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Viverra justo nec ultrices dui sapien eget mi proin sed."
-            ),
-
-            pw.Paragraph(
-                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas sed tempus urna. Quisque sagittis purus sit amet. A arcu cursus vitae congue mauris rhoncus aenean vel elit. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Viverra justo nec ultrices dui sapien eget mi proin sed."
-            ),
-
-            pw.Header(
-              level: 1,
-              child: pw.Text("Second Heading")
-            ),
-
-            pw.Paragraph(
-                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas sed tempus urna. Quisque sagittis purus sit amet. A arcu cursus vitae congue mauris rhoncus aenean vel elit. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Viverra justo nec ultrices dui sapien eget mi proin sed."
-            ),
-
-            pw.Paragraph(
-                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas sed tempus urna. Quisque sagittis purus sit amet. A arcu cursus vitae congue mauris rhoncus aenean vel elit. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Viverra justo nec ultrices dui sapien eget mi proin sed."
-            ),
-
-            pw.Paragraph(
-                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas sed tempus urna. Quisque sagittis purus sit amet. A arcu cursus vitae congue mauris rhoncus aenean vel elit. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Viverra justo nec ultrices dui sapien eget mi proin sed."
-            ),
-            pw.Image(image),
-             
-          ];
-        },
-      )
-    );
+              child: pw.Text(
+                  "This is the first test to generating ResultsPro PDFs for futher use")),
+          pw.Paragraph(
+              text:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas sed tempus urna. Quisque sagittis purus sit amet. A arcu cursus vitae congue mauris rhoncus aenean vel elit. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Viverra justo nec ultrices dui sapien eget mi proin sed."),
+          pw.Paragraph(
+              text:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas sed tempus urna. Quisque sagittis purus sit amet. A arcu cursus vitae congue mauris rhoncus aenean vel elit. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Viverra justo nec ultrices dui sapien eget mi proin sed."),
+          pw.Header(level: 1, child: pw.Text("Second Heading")),
+          pw.Paragraph(
+              text:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas sed tempus urna. Quisque sagittis purus sit amet. A arcu cursus vitae congue mauris rhoncus aenean vel elit. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Viverra justo nec ultrices dui sapien eget mi proin sed."),
+          pw.Paragraph(
+              text:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas sed tempus urna. Quisque sagittis purus sit amet. A arcu cursus vitae congue mauris rhoncus aenean vel elit. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Viverra justo nec ultrices dui sapien eget mi proin sed."),
+          pw.Paragraph(
+              text:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada fames ac turpis egestas sed tempus urna. Quisque sagittis purus sit amet. A arcu cursus vitae congue mauris rhoncus aenean vel elit. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Viverra justo nec ultrices dui sapien eget mi proin sed."),
+        ];
+      },
+    ));
   }
 
-  Future savePdf() async{
+  Future savePdf() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
 
     String documentPath = documentDirectory.path;
@@ -147,6 +73,7 @@ class _MyPdfHomePageState extends State<MyPdfHomePage> {
     File file = File("$documentPath/example.pdf");
 
     file.writeAsBytesSync(pdf.save());
+    // file.writeAsBytes(pdf.save());
   }
 
   Widget build(BuildContext context) {
@@ -157,37 +84,51 @@ class _MyPdfHomePageState extends State<MyPdfHomePage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        child: Form(         
+        child: Form(
           key: _formkey,
           child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("PDF TUTORIAL", style: TextStyle(fontSize: 34),),
-             SizedBox(height:20.0),          
-          ],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "PDF TUTORIAL",
+                style: TextStyle(fontSize: 34),
+              ),
+              SizedBox(height: 20.0),
+            ],
+          ),
         ),
-      ),
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: ()async{
+        onPressed: () async {
+
+          // final String dir = (await getApplicationDocumentsDirectory()).path;
+          // final String path = '$dir/report.pdf';
+          // final File file = File(path);
+          // await file.writeAsBytes(pdf.save());
+          // Navigator.of(context).push( MaterialPageRoute(
+          //     builder: (_) => PdfPreviewScreen(path: path),
+          //   ),
+          // );
           writeOnPdf();
           await savePdf();
 
-          Directory documentDirectory = await getApplicationDocumentsDirectory();
+          Directory documentDirectory =
+              await getApplicationDocumentsDirectory();
 
           String documentPath = documentDirectory.path;
 
           String fullPath = "$documentPath/example.pdf";
 
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => PdfPreviewScreen(path: fullPath,)
-          ));
-
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PdfPreviewScreen(
+                        path: fullPath,
+                      )));
         },
         child: Icon(Icons.save),
       ), // This trailing comma makes auto-formatting nicer for build methods.
-
     );
   }
 }

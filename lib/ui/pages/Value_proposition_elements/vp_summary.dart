@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:copy_cat/models/db2.dart';
@@ -6,6 +7,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:toast/toast.dart';
+import 'package:image_picker_saver/image_picker_saver.dart';
 
 class VPSummary extends StatefulWidget {
   final int modelID;
@@ -44,8 +47,8 @@ class VPSummaryState extends State<VPSummary> {
             appBar: AppBar(title: Text("Value Proposition Preview"), actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.save),
-                onPressed: ()=>_takeScreenShot(),
-              ),
+                onPressed: ()=>TakeScreenShot2()
+                )
             ]),
             body: RepaintBoundary(
                 key: previewContainer,
@@ -684,6 +687,35 @@ class VPSummaryState extends State<VPSummary> {
       print(e);
     }
   }
+
+
+  Future<Uint8List> TakeScreenShot2() async{
+      try {
+    print('inside');
+      RenderRepaintBoundary boundary =
+          previewContainer.currentContext.findRenderObject();
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      var pngBytes = byteData.buffer.asUint8List();
+      var bs64 = base64Encode(pngBytes);
+
+      var filePath = await ImagePickerSaver.saveFile(
+        fileData: byteData.buffer.asUint8List(),
+      );
+      print(filePath);
+      Toast.show("file saved in : $filePath", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      // print(pngBytes);
+      // print(bs64);
+      // setState(() {});
+      return pngBytes;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
+
+
 }
 
 class CanvasTitle extends StatelessWidget {
